@@ -1,0 +1,10 @@
+{
+  "member": "role:member or role:Member",
+  "admin": "role:admin",
+
+  "react_demo:entry_list": "rule:admin or rule:member",
+  "react_demo:entry_get": "rule:admin or rule:member",
+  "react_demo:entry_create": "rule:admin or rule:member",
+  "react_demo:entry_delete": "rule:admin or rule:member",
+  "react_demo:entry_update": "rule:admin or rule:member"
+}

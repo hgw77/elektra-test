@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@nivo/bar": "^0.42.1",
+    "@nivo/line": "^0.49.1",
     "@rails/webpacker": "^3.5.5",
     "axios": "*",
     "babel-plugin-react-require": "*",
@@ -27,6 +28,7 @@
     "react-datetime": "*",
     "react-dom": "^16.8.1",
     "react-json-view": "^1.16.6",
+    "react-rangeslider": "^2.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "*",
     "react-transition-group": "*",

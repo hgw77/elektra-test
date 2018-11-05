@@ -164,6 +164,7 @@ SimpleNavigation::Configuration.run do |navigation|
       monitoring_nav.item :metrics, 'Metrics', -> { plugin('metrics').index_path }, if: -> { plugin_available?(:metrics)}, highlights_on: Proc.new { params[:controller][/metrics\/.*/] }
       monitoring_nav.item :audit, 'Audit', -> { plugin('audit').root_path }, if: -> { plugin_available?(:audit)}, highlights_on: -> { params[:controller][%r{audit/?.*}] }
       monitoring_nav.item :reports, 'Cost Report', -> { plugin('reports').project_cost_index_path }, if: -> { plugin_available?(:reports)}, highlights_on: -> { params[:controller][%r{reports/?.*}] }
+      monitoring_nav.item :graph_test, 'Graph Test', -> { plugin('graph_test').start_path }, if: -> { plugin_available?(:graph_test)}, highlights_on: -> { params[:controller][%r{graph_test/?.*}] }
     end
 
     primary.item :cc_tools, "Tools", nil,
