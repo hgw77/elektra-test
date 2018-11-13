@@ -5,7 +5,8 @@ import GraphData from '../components/graph.jsx';
 import {
   handleActionStartTimeChange,
   handleActionEndTimeChange,
-  fetchMetricsDataIfNeeded
+  handleActionStepsChange,
+  fetchMetricsDataIfNeeded,
 } from '../actions/metrics'
 
 // subscribe to redux store updates.
@@ -23,6 +24,7 @@ export default connect(
   // declare what actions are exposed to our component as props
   dispatch => ({
     loadMetricsDataOnce: (server_id) => dispatch(fetchMetricsDataIfNeeded(server_id)),
+    handleStepChange:(steps) => dispatch(handleActionStepsChange(steps)),
     handleStartTimeChange: (start_time) => dispatch(handleActionStartTimeChange(start_time)),
     handleEndTimeChange: (end_time) => dispatch(handleActionEndTimeChange(end_time))
   })

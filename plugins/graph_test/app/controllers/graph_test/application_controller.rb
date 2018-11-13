@@ -20,10 +20,12 @@ module GraphTest
 
       # prepare date for response
       graph_values = []
-      graph_values = data.values.map{ |v| {
-        x:Time.at(v[0]).strftime("%F %T"),
-        y: (v[1].to_f/10000).round(2) }
-      }
+      unless data.values.nil?
+        graph_values = data.values.map{ |v| {
+          x:Time.at(v[0]).strftime("%F %T"),
+          y: (v[1].to_f/10000).round(2) }
+        }
+      end
 
       render json: {
         cpu_usage_average: {

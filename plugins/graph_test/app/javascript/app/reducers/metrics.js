@@ -26,13 +26,14 @@ const requestMetricsDataFailure=function(state){
 };
 
 // action with filtered keys
-const receiveMetricsData=(state,{metrics_data,server_id,start_time,end_time,receivedAt})=>
+const receiveMetricsData=(state,{metrics_data,server_id,start_time,end_time,receivedAt,steps})=>
   Object.assign({},state,{
     isFetching: false,
     data: metrics_data,
     server_id: server_id,
     start_time: start_time,
     end_time: end_time,
+    steps:steps,
     receivedAt
   })
 ;

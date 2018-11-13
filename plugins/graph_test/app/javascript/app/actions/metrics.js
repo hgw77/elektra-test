@@ -66,6 +66,15 @@ const handleActionStartTimeChange= (start_time) => (
   }
 );
 
+const handleActionStepsChange= (steps) => (
+  function(dispatch, getState) {
+    // check if it is allready fetching
+    console.log("handleActionStepsChange");
+    // server_id already in the store
+    return dispatch(fetchMetricsData(undefined,undefined,undefined,steps));
+  }
+);
+
 const handleActionEndTimeChange= (end_time) => (
   function(dispatch, getState) {
     // check if it is allready fetching
@@ -75,6 +84,7 @@ const handleActionEndTimeChange= (end_time) => (
   }
 );
 
+// fetch real data from backend and put it into the reducer
 const fetchMetricsData= (server_id, start_time, end_time, steps) =>
   function(dispatch, getState) {
     console.log("fetchMetricsData");
@@ -84,15 +94,17 @@ const fetchMetricsData= (server_id, start_time, end_time, steps) =>
     if (!server_id) server_id = state.metrics.server_id;
     if (!start_time) start_time = state.metrics.start_time;
     if (!end_time) end_time = state.metrics.end_time;
+    if (!steps) steps = state.metrics.steps;
 
     if (start_time > end_time) {
-      showError("Start time should not bevore end time!")
+      showError("Start time should not bevore end time!");
+      console.log("start time:"+start_time+" end time:"+end_time);
     }
     else {
       // 1) start request by setting the date
       dispatch(requestMetricsData());
       // response comes from ajaxHelper
-      ajaxHelper.get(`get_metrics/?uuid=${server_id}&start_time=${start_time}&end_time=${end_time}`).then( (response) => {
+      ajaxHelper.get(`get_metrics/?uuid=${server_id}&start_time=${start_time}&end_time=${end_time}&steps=${steps}`).then( (response) => {
         // 2) to have the data in the store dispatch the response into the reducer
         return dispatch(receiveMetricsData(response.data.cpu_usage_average.values, server_id, start_time, end_time, steps));
       })
@@ -108,5 +120,6 @@ const fetchMetricsData= (server_id, start_time, end_time, steps) =>
 export {
   fetchMetricsDataIfNeeded,
   handleActionEndTimeChange,
-  handleActionStartTimeChange
+  handleActionStartTimeChange,
+  handleActionStepsChange
 }

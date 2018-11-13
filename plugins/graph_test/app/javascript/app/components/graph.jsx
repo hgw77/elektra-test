@@ -19,22 +19,26 @@ export default class MetricsGraph extends React.Component {
   constructor(props){
   	super(props);
     this.state = {
-      value: 360
+      steps: 360,
+      server_id: "3f769d10-cc4f-4b78-a8c7-22f418fb35b9"
     }
   }
 
   handleChange = (value) => {
+    // write new slider state to local state
     this.setState({
-      value: value
+      steps: value
     })
+    console.log(this.state);
   }
 
   handleChangeStart = () => {
-    console.log('Change event started')
+    //console.log('Change event started')
   };
 
   handleChangeComplete = () => {
     console.log('Change event completed')
+    this.props.handleStepChange(this.state.steps);
   };
 
   // This method is called when props are passed to the Component instance.
@@ -50,8 +54,7 @@ export default class MetricsGraph extends React.Component {
   // from a remote endpoint, this is a good place to instantiate the network request.
   componentDidMount() {
     console.log('componentDidMount');
-    var server_id = "3f769d10-cc4f-4b78-a8c7-22f418fb35b9";
-    this.props.loadMetricsDataOnce(server_id);
+    this.props.loadMetricsDataOnce(this.state.server_id);
   }
 
   // Remove keys to have just an array of objects
@@ -124,12 +127,10 @@ export default class MetricsGraph extends React.Component {
           }}
         />
       </div>
-
     )
   };
 
   toolBar() {
-    const { value } = this.state
     return (
       <div>
         <div className='toolbar toolbar-controlcenter'>
@@ -151,13 +152,13 @@ export default class MetricsGraph extends React.Component {
               min={10}
               max={500}
               step={1}
-              value={value}
+              value={this.state.steps}
               onChangeStart={this.handleChangeStart}
               onChange={this.handleChange}
               onChangeComplete={this.handleChangeComplete}
             />
           </div>
-          <div>Steps - {value}</div>
+          <div>Steps - {this.state.steps}</div>
         </div>
       </div>
     )
