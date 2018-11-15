@@ -10,6 +10,7 @@ import Slider from 'react-rangeslider'
 // https://www.npmjs.com/package/react-moment
 import moment from 'moment'
 
+// https://www.npmjs.com/package/react-datetime#selectable-dates
 const isValidDate = (date) =>
   // do not allow dates that are in the future
   !moment(date).isAfter()
@@ -19,27 +20,52 @@ export default class MetricsGraph extends React.Component {
   constructor(props){
   	super(props);
     this.state = {
-      steps: 360,
-      server_id: "3f769d10-cc4f-4b78-a8c7-22f418fb35b9"
+      steps: this.props.metrics.steps,
+      detail_resolution: "medium",
+      server_id: "3f769d10-cc4f-4b78-a8c7-22f418fb35b9",
+      epoch_start_time: this.props.metrics.start_time
     }
   }
 
+  // https://reactjs.org/docs/faq-functions.html
+  // to access this in the function and to call the function within the component
+  // 1. handleChange() {}
+  // 2. in the construktor -> this.handleChange = this.handleChange.bind(this);
+  // or you can use the arrow function like below
   handleChange = (value) => {
     // write new slider state to local state
+    var resolution = "medium";
+    if (value > 100 && value < 300) {
+      resolution = "ultra"
+    }
+    else if (value > 301 && value < 500) {
+      resolution = "high"
+    }
+    else if (value > 800 && value < 1000) {
+      resolution = "low"
+    }
+
     this.setState({
-      steps: value
+      steps: value,
+      detail_resolution: resolution
     })
-    console.log(this.state);
+    //console.log(this.state);
   }
 
-  handleChangeStart = () => {
-    //console.log('Change event started')
-  };
-
   handleChangeComplete = () => {
-    console.log('Change event completed')
+    //console.log('Change event completed')
     this.props.handleStepChange(this.state.steps);
   };
+
+  handleTimeZoomChange = (epoch) => {
+    this.setState({
+      epoch_start_time: epoch
+    })
+  }
+
+  handleTimeZoomChangeComplete = () => {
+    this.props.handleStartTimeChange(this.state.epoch_time_range);
+  }
 
   // This method is called when props are passed to the Component instance.
   // https://developmentarc.gitbooks.io/react-indepth/content/life_cycle/update/component_will_receive_props.html
@@ -57,17 +83,65 @@ export default class MetricsGraph extends React.Component {
     this.props.loadMetricsDataOnce(this.state.server_id);
   }
 
-  // Remove keys to have just an array of objects
-  // Reverse array to go from the past to the present
-  // getData = () => {
-  //  const data = this.props.metrics.data
-  //  let resultArray = Object.keys(data).map(i => data[i])
-  //  console.log(resultArray.length)
-  //  return resultArray
-  // }
+  renderLine(name,unit,data,y_scale = ["auto","auto"],enable_area = false) {
+    var timeTickRotation = 0;
+    var marginBottom = 40;
+    return (
+      <div>
+        <h3>{name}</h3>
+        <Line
+        width={900}
+        height={400}
+        margin={{
+          top: 20,
+          right: 50,
+          bottom: marginBottom,
+          left: 80
+        }}
+        data={data}
+        animate={true}
+        enableDots={false}
+        curve="basis"
+        enableArea={enable_area}
+        // https://github.com/plouc/nivo/issues/283
+        // https://github.com/d3/d3-scale
+        // http://nivo.rocks/line
+        xScale={{type: 'time',format: "%Y-%m-%d %H:%M:%S" ,precision: 'minute'}}
+        yScale={{type: 'linear',stacked: false, "min": y_scale[0],"max": y_scale[1]}}
+        axisBottom={{
+          "orient": "bottom",
+          "tickSize": 5,
+          "tickPadding": 15,
+          "tickRotation": timeTickRotation,
+          "legend": "",
+          "legendOffset": 40,
+          "legendPosition": "center",
+          "format":'%b %d %H:%M'}}
+        axisLeft={{
+            "orient": "left",
+            "tickSize": 5,
+            "tickPadding": 10,
+            "tickRotation": 0,
+            "legend": name+" ("+unit+")",
+            "legendOffset": -45,
+            "legendPosition": "center"
+        }}
+        axisRight={{
+            "orient": "right",
+            "tickSize": 5,
+            "tickPadding": 10,
+            "tickRotation": 0,
+            "legend": "",
+            "legendOffset": -45,
+            "legendPosition": "center"
+        }}
+      />
+    </div>
+    )
+  }
 
   renderGraph() {
-    console.log('renderGraph');
+    // console.log('renderGraph');
     // console.log(this.getData());
     var timeTickRotation = 0;
     var marginBottom = 40;
@@ -75,99 +149,68 @@ export default class MetricsGraph extends React.Component {
       timeTickRotation = 90;
       marginBottom = 90;
     }
+    // auslagern in eigene componente
     return (
       <div>
-        <h3>CPU Usage Average</h3>
-        <Line
-          width={900}
-          height={400}
-          margin={{
-            top: 20,
-            right: 50,
-            bottom: marginBottom,
-            left: 80
-          }}
-          data={[{
-            id: 'CPU Usage Average',
-              "data": this.props.metrics.data
-            }
-          ]}
-          animate={true}
-          enableDots={false}
-          curve="linear"
-          // https://github.com/plouc/nivo/issues/283
-          // https://github.com/d3/d3-scale
-          xScale={{type: 'time',format: "%Y-%m-%d %H:%M:%S" ,precision: 'minute'}}
-          axisBottom={{
-            "orient": "bottom",
-            "tickSize": 5,
-            "tickPadding": 15,
-            "tickRotation": timeTickRotation,
-            "legend": "",
-            "legendOffset": 40,
-            "legendPosition": "center",
-            "format":'%b %d %H:%M'}}
-          axisLeft={{
-              "orient": "left",
-              "tickSize": 5,
-              "tickPadding": 10,
-              "tickRotation": 0,
-              "legend": "CPU Usage Average(%)",
-              "legendOffset": -45,
-              "legendPosition": "center"
-          }}
-          axisRight={{
-              "orient": "right",
-              "tickSize": 5,
-              "tickPadding": 10,
-              "tickRotation": 0,
-              "legend": "",
-              "legendOffset": -45,
-              "legendPosition": "center"
-          }}
-        />
+        {this.renderLine("CPU Usage","%",this.props.metrics.data.cpu_usage_average,[0,100])}
+        {this.renderLine("Memory Usage","%",this.props.metrics.data.mem_usage_average,[0,100],true)}
+        {this.renderLine("Network Usage ","Kb/s",this.props.metrics.data.net_usage_average,["auto","auto"],true)}
       </div>
     )
   };
-
+/*
+  <Datetime
+    value=""
+    inputProps={{placeholder: 'Select start time'}}
+    isValidDate={isValidDate}
+    onChange={(e) => this.props.handleStartTimeChange(e)}/>
+  <span className='toolbar-input-divider'>&ndash;</span>
+  <Datetime
+    value=""
+    inputProps={{placeholder: 'Select end time'}}
+    isValidDate={isValidDate}
+    onChange={(e) => this.props.handleEndTimeChange(e)}/>
+  <span className='toolbar-input-divider'>&ndash;</span>
+*/
   toolBar() {
     return (
       <div>
         <div className='toolbar toolbar-controlcenter'>
-          <label>Time range:</label>
-          <Datetime
-            value=""
-            inputProps={{placeholder: 'Select start time'}}
-            isValidDate={isValidDate}
-            onChange={(e) => this.props.handleStartTimeChange(e)}/>
-          <span className='toolbar-input-divider'>&ndash;</span>
-          <Datetime
-            value=""
-            inputProps={{placeholder: 'Select end time'}}
-            isValidDate={isValidDate}
-            onChange={(e) => this.props.handleEndTimeChange(e)}/>
-          <span className='toolbar-input-divider'>&ndash;</span>
+          <div>Time Zoom</div>
           <div style={{ "width":"250px", "marginRight":"15px" }}>
             <Slider
-              min={10}
-              max={500}
-              step={1}
-              value={this.state.steps}
-              onChangeStart={this.handleChangeStart}
-              onChange={this.handleChange}
-              onChangeComplete={this.handleChangeComplete}
+              min={parseInt(moment().subtract(7, 'days').format('x'))}
+              max={parseInt(moment().subtract(1, 'hour').format('x'))}
+              step={600}
+              value={this.state.epoch_start_time}
+              onChange={this.handleTimeZoomChange}
+              onChangeComplete={this.handleTimeZoomChangeComplete}
+              tooltip={false}
             />
           </div>
-          <div>Steps - {this.state.steps}</div>
+          <div>{moment(this.state.epoch_start_time).fromNow()}</div>
+          <span className='toolbar-input-divider'>&ndash;</span>
+          <div>Resolution</div>
+          <div style={{ "width":"250px", "marginRight":"15px" }}>
+            <Slider
+              min={200}
+              max={1000}
+              step={5}
+              value={this.state.steps}
+              onChange={this.handleChange}
+              onChangeComplete={this.handleChangeComplete}
+              tooltip={false}
+            />
+          </div>
+          <div>{this.state.detail_resolution}</div>
         </div>
       </div>
     )
   }
 
   render(){
-    console.log('render MetricsGraph');
+    //console.log('render MetricsGraph');
     return (
-
       <div>
         { this.toolBar() }
         { this.props.metrics.isFetching ? <div><span className='spinner'> </span><span>L O A D I N G</span></div> : this.renderGraph() }

@@ -1,16 +1,20 @@
 import * as constants from '../constants';
+import moment from 'moment';
 
 // metrics
 const initialState = {
-  data: [],
+  data: {
+    cpu_usage_average: [],
+    mem_usage_average: [],
+    net_usage_average: [],
+  },
   receivedAt: null,
   updatedAt: null,
   isFetching: false,
   server_id: "",
-  start_time: Date.now()-(24 * 60 * 60 * 1000),
-  // 24h in the past
-  end_time:Date.now(),
-  steps: 360
+  start_time: parseInt(moment().subtract(1, 'days').format('x')),
+  end_time: parseInt(moment().format('x')),
+  steps: 600
 };
 
 const requestMetricsData=(state,{requestedAt})=>

@@ -4,7 +4,7 @@ import GraphData from '../components/graph.jsx';
 // import actions!!!!
 import {
   handleActionStartTimeChange,
-  handleActionEndTimeChange,
+  //handleActionEndTimeChange,
   handleActionStepsChange,
   fetchMetricsDataIfNeeded,
 } from '../actions/metrics'
@@ -25,7 +25,7 @@ export default connect(
   dispatch => ({
     loadMetricsDataOnce: (server_id) => dispatch(fetchMetricsDataIfNeeded(server_id)),
     handleStepChange:(steps) => dispatch(handleActionStepsChange(steps)),
-    handleStartTimeChange: (start_time) => dispatch(handleActionStartTimeChange(start_time)),
-    handleEndTimeChange: (end_time) => dispatch(handleActionEndTimeChange(end_time))
+    handleStartTimeChange: (start_time) => dispatch(handleActionStartTimeChange(start_time))
+    //handleEndTimeChange: (end_time) => dispatch(handleActionEndTimeChange(end_time))
   })
 )(GraphData);

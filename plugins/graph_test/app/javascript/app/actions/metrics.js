@@ -75,6 +75,7 @@ const handleActionStepsChange= (steps) => (
   }
 );
 
+/*
 const handleActionEndTimeChange= (end_time) => (
   function(dispatch, getState) {
     // check if it is allready fetching
@@ -83,7 +84,7 @@ const handleActionEndTimeChange= (end_time) => (
     return dispatch(fetchMetricsData(undefined,undefined,end_time));
   }
 );
-
+*/
 // fetch real data from backend and put it into the reducer
 const fetchMetricsData= (server_id, start_time, end_time, steps) =>
   function(dispatch, getState) {
@@ -106,7 +107,7 @@ const fetchMetricsData= (server_id, start_time, end_time, steps) =>
       // response comes from ajaxHelper
       ajaxHelper.get(`get_metrics/?uuid=${server_id}&start_time=${start_time}&end_time=${end_time}&steps=${steps}`).then( (response) => {
         // 2) to have the data in the store dispatch the response into the reducer
-        return dispatch(receiveMetricsData(response.data.cpu_usage_average.values, server_id, start_time, end_time, steps));
+        return dispatch(receiveMetricsData(response.data, server_id, start_time, end_time, steps));
       })
       .catch( (error) => {
         dispatch(requestMetricsDataFailure());
@@ -119,7 +120,7 @@ const fetchMetricsData= (server_id, start_time, end_time, steps) =>
 // actions are dispatched
 export {
   fetchMetricsDataIfNeeded,
-  handleActionEndTimeChange,
+  //handleActionEndTimeChange,
   handleActionStartTimeChange,
   handleActionStepsChange
 }
