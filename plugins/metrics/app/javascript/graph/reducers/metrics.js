@@ -5,15 +5,13 @@ import moment from 'moment';
 const initialState = {
   data: {
     cpu_usage_average: [],
-    mem_usage_average: [],
-    net_usage_average: [],
   },
   receivedAt: null,
   updatedAt: null,
   isFetching: false,
-  server_id: "",
-  start_time: parseInt(moment().subtract(1, 'days').format('x')),
-  end_time: parseInt(moment().format('x')),
+  instanceId: "",
+  startTime: parseInt(moment().subtract(1, 'days').format('x')),
+  endTime: parseInt(moment().format('x')),
   steps: 600
 };
 
@@ -30,13 +28,13 @@ const requestMetricsDataFailure=function(state){
 };
 
 // action with filtered keys
-const receiveMetricsData=(state,{metrics_data,server_id,start_time,end_time,receivedAt,steps})=>
+const receiveMetricsData=(state,{metrics_data,instanceId,startTime,endTime,receivedAt,steps})=>
   Object.assign({},state,{
     isFetching: false,
     data: metrics_data,
-    server_id: server_id,
-    start_time: start_time,
-    end_time: end_time,
+    instanceId: instanceId,
+    startTime: startTime,
+    endTime: endTime,
     steps:steps,
     receivedAt
   })

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { TransitionGroup } from 'react-transition-group';
 import { FadeTransition } from 'lib/components/transitions';
 // http://nivo.rocks/line/
-import { Line } from '@nivo/line';
+import { Line, ResponsiveLine } from '@nivo/line';
 // https://www.npmjs.com/package/react-datetime
 import Datetime from 'react-datetime'
 // https://whoisandy.github.io/react-rangeslider/
@@ -21,9 +21,8 @@ export default class MetricsGraph extends React.Component {
   	super(props);
     this.state = {
       steps: this.props.metrics.steps,
-      detail_resolution: "medium",
-      epoch_start_time: this.props.metrics.start_time,
-      instance_id: this.props.instanceId,
+      detailResolution: "medium",
+      epochStartTime: this.props.metrics.startTime,
     }
   }
 
@@ -32,7 +31,7 @@ export default class MetricsGraph extends React.Component {
   // 1. handleChange() {}
   // 2. in the construktor -> this.handleChange = this.handleChange.bind(this);
   // or you can use the arrow function like below
-  handleChange = (value) => {
+  handleResolutionChange = (value) => {
     // write new slider state to local state
     var resolution = "medium";
     if (value > 100 && value < 300) {
@@ -47,24 +46,24 @@ export default class MetricsGraph extends React.Component {
 
     this.setState({
       steps: value,
-      detail_resolution: resolution
+      detailResolution: resolution
     })
     //console.log(this.state);
   }
 
-  handleChangeComplete = () => {
+  handleResolutionChangeComplete = () => {
     //console.log('Change event completed')
     this.props.handleStepChange(this.state.steps);
   };
 
   handleTimeZoomChange = (epoch) => {
     this.setState({
-      epoch_start_time: epoch
+      epochStartTime: epoch
     })
   }
 
   handleTimeZoomChangeComplete = () => {
-    this.props.handleStartTimeChange(this.state.epoch_time_range);
+    this.props.handleStartTimeChange(this.state.epochStartTime);
   }
 
   // This method is called when props are passed to the Component instance.
@@ -80,8 +79,7 @@ export default class MetricsGraph extends React.Component {
   // from a remote endpoint, this is a good place to instantiate the network request.
   componentDidMount() {
     console.log('componentDidMount');
-    console.log(this.state.instance_id);
-    this.props.loadMetricsDataOnce(this.state.instance_id);
+    this.props.loadMetricsDataOnce(this.props.instanceId);
   }
 
   renderLine(name,unit,data,y_scale = ["auto","auto"],enable_area = false) {
@@ -90,7 +88,7 @@ export default class MetricsGraph extends React.Component {
     return (
       <div>
         <Line
-        width={900}
+        width={1100}
         height={400}
         margin={{
           top: 20,
@@ -167,27 +165,27 @@ export default class MetricsGraph extends React.Component {
               min={parseInt(moment().subtract(7, 'days').format('x'))}
               max={parseInt(moment().subtract(1, 'hour').format('x'))}
               step={600}
-              value={this.state.epoch_start_time}
+              value={this.state.epochStartTime}
               onChange={this.handleTimeZoomChange}
               onChangeComplete={this.handleTimeZoomChangeComplete}
               tooltip={false}
             />
           </div>
-          <div>{moment(this.state.epoch_start_time).fromNow()}</div>
+          <div>{moment(this.state.epochStartTime).fromNow()}</div>
           <span className='toolbar-input-divider'>&ndash;</span>
           <div>Resolution</div>
           <div style={{ "width":"250px", "marginRight":"15px" }}>
             <Slider
               min={200}
-              max={1000}
+              max={999}
               step={5}
               value={this.state.steps}
-              onChange={this.handleChange}
-              onChangeComplete={this.handleChangeComplete}
+              onChange={this.handleResolutionChange}
+              onChangeComplete={this.handleResolutionChangeComplete}
               tooltip={false}
             />
           </div>
-          <div>{this.state.detail_resolution}</div>
+          <div>{this.state.detailResolution}</div>
         </div>
       </div>
     )

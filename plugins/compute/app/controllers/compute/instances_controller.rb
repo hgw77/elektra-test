@@ -86,8 +86,6 @@ module Compute
         instance_id: @instance.id,
       }
 
-      puts @js_data
-
       @log = begin
         services.compute.console_log(params[:id])
       rescue

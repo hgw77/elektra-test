@@ -16,16 +16,16 @@ export default connect(
   // can be used to filter or transform the state
   (state) => ({
     metrics: state.metrics,
-    start_time: state.start_time,
-    end_time: state.end_time,
+    startTime: state.startTime,
+    endTime: state.endTime,
     isFetching: state.isFetching
   }),
   // mapDispatchToProps
   // declare what actions are exposed to our component as props
   dispatch => ({
-    loadMetricsDataOnce: (server_id) => dispatch(fetchMetricsDataIfNeeded(server_id)),
+    loadMetricsDataOnce: (instanceId) => dispatch(fetchMetricsDataIfNeeded(instanceId)),
     handleStepChange:(steps) => dispatch(handleActionStepsChange(steps)),
-    handleStartTimeChange: (start_time) => dispatch(handleActionStartTimeChange(start_time))
-    //handleEndTimeChange: (end_time) => dispatch(handleActionEndTimeChange(end_time))
+    handleStartTimeChange: (startTime) => dispatch(handleActionStartTimeChange(startTime))
+    //handleEndTimeChange: (endTime) => dispatch(handleActionEndTimeChange(endTime))
   })
 )(GraphData);

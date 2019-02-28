@@ -31,14 +31,14 @@ const requestMetricsDataFailure= () => (
 );
 
 // this is the data structure that is dispatched as action into the reducer
-const receiveMetricsData= (metrics_data, server_id, start_time, end_time, steps) => (
+const receiveMetricsData= (metrics_data, instanceId, startTime, endTime, steps) => (
   {
     type: constants.RECEIVE_METRICS_DATA,
     metrics_data: metrics_data,
     receivedAt: Date.now(),
-    server_id: server_id,
-    start_time: start_time,
-    end_time: end_time,
+    instanceId: instanceId,
+    startTime: startTime,
+    endTime: endTime,
     steps: steps
   }
 );
@@ -53,22 +53,22 @@ const shouldFetchMetrics= function(state) {
 };
 
 // DISPATCH ACTIONS
-const fetchMetricsDataIfNeeded= (server_id) => (
+const fetchMetricsDataIfNeeded= (instanceId) => (
   function(dispatch, getState) {
     console.log("fetchMetricsDataIfNeeded");
     // check if it is allready fetching
     if (shouldFetchMetrics(getState())) {
-      return dispatch(fetchMetricsData(server_id));
+      return dispatch(fetchMetricsData(instanceId));
     }
   }
 );
 
-const handleActionStartTimeChange= (start_time) => (
+const handleActionStartTimeChange= (startTime) => (
   function(dispatch, getState) {
     // check if it is allready fetching
     console.log("handleActionStartTimeChange");
-    // server_id already in the store
-    return dispatch(fetchMetricsData(undefined,start_time));
+    // instanceId already in the store
+    return dispatch(fetchMetricsData(undefined,startTime));
   }
 );
 
@@ -76,45 +76,45 @@ const handleActionStepsChange= (steps) => (
   function(dispatch, getState) {
     // check if it is allready fetching
     console.log("handleActionStepsChange");
-    // server_id already in the store
+    // instanceId already in the store
     return dispatch(fetchMetricsData(undefined,undefined,undefined,steps));
   }
 );
 
 /*
-const handleActionEndTimeChange= (end_time) => (
+const handleActionEndTimeChange= (endTime) => (
   function(dispatch, getState) {
     // check if it is allready fetching
     console.log("handleActionEndTimeChange");
-    // server_id and start_time already in the store
-    return dispatch(fetchMetricsData(undefined,undefined,end_time));
+    // instanceId and startTime already in the store
+    return dispatch(fetchMetricsData(undefined,undefined,endTime));
   }
 );
 */
 // fetch real data from backend and put it into the reducer
-const fetchMetricsData= (server_id, start_time, end_time, steps) =>
+const fetchMetricsData= (instanceId, startTime, endTime, steps) =>
   function(dispatch, getState) {
     console.log("fetchMetricsData");
 
     // get default time frame from state
     var state = getState();
-    if (!server_id) server_id = state.metrics.server_id;
-    if (!start_time) start_time = state.metrics.start_time;
-    if (!end_time) end_time = state.metrics.end_time;
+    if (!instanceId) instanceId = state.metrics.instanceId;
+    if (!startTime) startTime = state.metrics.startTime;
+    if (!endTime) endTime = state.metrics.endTime;
     if (!steps) steps = state.metrics.steps;
 
-    if (start_time > end_time) {
+    if (startTime > endTime) {
       showError("Start time should not bevore end time!");
-      console.log("start time:"+start_time+" end time:"+end_time);
+      console.log("start time:"+startTime+" end time:"+endTime);
     }
     else {
       // 1) start request by setting the date
       dispatch(requestMetricsData());
       // response comes from ajaxHelper
-      elektraMetricsAjaxHelper.get(`get_metrics/?uuid=${server_id}&start_time=${start_time}&end_time=${end_time}&steps=${steps}`)
+      elektraMetricsAjaxHelper.get(`get_metrics/?uuid=${instanceId}&start_time=${startTime}&end_time=${endTime}&steps=${steps}`)
         .then( (response) => {
           // 2) to have the data in the store dispatch the response into the reducer
-          return dispatch(receiveMetricsData(response.data, server_id, start_time, end_time, steps));
+          return dispatch(receiveMetricsData(response.data, instanceId, startTime, endTime, steps));
         })
         .catch( (error) => {
           dispatch(requestMetricsDataFailure());
