@@ -21,6 +21,14 @@
 
 */
 
+@import "react-datetime";
+@import "react-rangeslider";
+
+.rangeslider {
+  margin-top:12px;
+  margin-left:10px;
+}
+
 .flavor-details, .image-details {
   table {
     width: 100%;

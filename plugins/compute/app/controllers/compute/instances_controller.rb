@@ -79,11 +79,20 @@ module Compute
         ).first
       end.values
 
-      @log = begin 
+      # for react metrics app
+      @js_data = {
+        token:   current_user.token,
+        metrics_api: current_user.service_url('metrics'),
+        instance_id: @instance.id,
+      }
+
+      puts @js_data
+
+      @log = begin
         services.compute.console_log(params[:id])
-      rescue 
+      rescue
         nil
-      end  
+      end
     end
 
     def new
