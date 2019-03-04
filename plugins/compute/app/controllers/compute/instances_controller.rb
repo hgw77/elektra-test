@@ -79,7 +79,7 @@ module Compute
         ).first
       end.values
 
-      # for react metrics app
+      # this data is used in the react metrics app
       @js_data = {
         token:   current_user.token,
         metrics_api: current_user.service_url('metrics'),

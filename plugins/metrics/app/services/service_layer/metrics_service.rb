@@ -14,14 +14,14 @@ module ServiceLayer
       @metrics_map ||= class_map_proc(Metrics::MetricsData)
     end
 
-    def get_metrics_for(metric,instance_uuid,project_id = "",start_time = Time.now - 60*60*24, end_time = Time.now, step = "360")
+    def get_metrics_for(metric,instance_id,project_id = "",start_time = Time.now - 60*60*24, end_time = Time.now, step = "360")
 
       # https://prometheus.io/docs/prometheus/latest/querying/api/
       # https://ruby-doc.org/core-2.2.0/Time.html
 
       # default timeframe 1d
       elektron_metrics.get('query_range',
-        'query' => "#{metric}{instance_uuid='#{instance_uuid}'}",
+        'query' => "#{metric}{instance_uuid='#{instance_id}'}",
         'start' => start_time,
         'end'   => end_time,
         'step'  => step,

@@ -19,6 +19,7 @@ export default class MetricsGraph extends React.Component {
 
   constructor(props){
   	super(props);
+    // used for the slider
     this.state = {
       steps: this.props.metrics.steps,
       detailResolution: "medium",
@@ -26,6 +27,7 @@ export default class MetricsGraph extends React.Component {
     }
   }
 
+  // RESOLUTION SLIDER
   // https://reactjs.org/docs/faq-functions.html
   // to access this in the function and to call the function within the component
   // 1. handleChange() {}
@@ -56,6 +58,7 @@ export default class MetricsGraph extends React.Component {
     this.props.handleStepChange(this.state.steps);
   };
 
+  // TIMEZOME SLIDER
   handleTimeZoomChange = (epoch) => {
     this.setState({
       epochStartTime: epoch
@@ -66,11 +69,12 @@ export default class MetricsGraph extends React.Component {
     this.props.handleStartTimeChange(this.state.epochStartTime);
   }
 
+  // BASIC REACT FUNCTIONS
   // This method is called when props are passed to the Component instance.
   // https://developmentarc.gitbooks.io/react-indepth/content/life_cycle/update/component_will_receive_props.html
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps');
-    console.log(nextProps);
+    //console.log('componentWillReceiveProps');
+    //console.log(nextProps);
   }
 
   // https://reactjs.org/docs/react-component.html#componentdidmount
@@ -151,6 +155,8 @@ export default class MetricsGraph extends React.Component {
     return (
       <div>
         {this.renderLine("CPU Usage","%",this.props.metrics.data.cpu_usage_average,[0,100])}
+        {/*this.renderLine("Memory Usage","%",this.props.metrics.data.mem_usage_average,[0,100],true)*/}
+        {/*this.renderLine("Network Usage ","Kb/s",this.props.metrics.data.net_usage_average,["auto","auto"],true)*/}
       </div>
     )
   };

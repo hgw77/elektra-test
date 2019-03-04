@@ -1,10 +1,12 @@
 import * as constants from '../constants';
 import moment from 'moment';
 
-// metrics
+// initial store state
 const initialState = {
   data: {
-    cpu_usage_average: [],
+    cpu_usage_average:[],
+    mem_usage_average:[],
+    net_usage_average:[]
   },
   receivedAt: null,
   updatedAt: null,

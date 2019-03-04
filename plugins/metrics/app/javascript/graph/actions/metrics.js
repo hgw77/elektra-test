@@ -111,7 +111,7 @@ const fetchMetricsData= (instanceId, startTime, endTime, steps) =>
       // 1) start request by setting the date
       dispatch(requestMetricsData());
       // response comes from ajaxHelper
-      elektraMetricsAjaxHelper.get(`get_metrics/?uuid=${instanceId}&start_time=${startTime}&end_time=${endTime}&steps=${steps}`)
+      elektraMetricsAjaxHelper.get(`get_metrics/?instance_id=${instanceId}&start_time=${startTime}&end_time=${endTime}&steps=${steps}`)
         .then( (response) => {
           // 2) to have the data in the store dispatch the response into the reducer
           return dispatch(receiveMetricsData(response.data, instanceId, startTime, endTime, steps));
@@ -127,7 +127,6 @@ const fetchMetricsData= (instanceId, startTime, endTime, steps) =>
 // actions are dispatched
 export {
   fetchMetricsDataIfNeeded,
-  //handleActionEndTimeChange,
   handleActionStartTimeChange,
   handleActionStepsChange
 }
