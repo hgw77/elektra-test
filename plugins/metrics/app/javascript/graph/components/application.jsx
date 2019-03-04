@@ -1,6 +1,9 @@
 import { HashRouter, Route, Redirect } from 'react-router-dom'
 import Tabs from './tabs';
 
+// component -> container -> action -> reducer -> store -> returns new object -|
+//   ^------------------------------ render new -------------------------------|
+// Note: in standard react-redux component and container are in the same file
 import CpuMetrics from '../containers/cpu_metrics'
 // containers: react component thats uses the store and  supply props to the child components
 

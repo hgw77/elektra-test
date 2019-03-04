@@ -1,16 +1,23 @@
 import { connect } from  'react-redux';
 // helper to map actions to props
 import { bindActionCreators } from 'redux';
+// import related component
 import GraphData from '../components/cpu_graph.jsx';
-
-// import actions
+// import all actions
+import * as metricsActions from '../actions/metrics'
+/*
+// import dedicated actions
 import {
   handleActionStartTimeChange,
   handleActionStepsChange,
   fetchMetricsDataIfNeeded,
 } from '../actions/metrics'
+*/
 
-function mapStateToProps(state) {
+// declare what part of the store we want to attach to our component as props
+// state:    is the state within our Redux store
+// ownProps: is a reference to the components own props, mostly used to accessing routing related props injected by React Router
+function mapStateToProps(state, ownProps) {
   // return an object, each prop on the object will become prop on the container
   return {
     metrics:    state.metrics,
@@ -20,14 +27,15 @@ function mapStateToProps(state) {
   };
 }
 
+// declare what actions we want to expose to props
 function mapDispatchToProps(dispatch) {
   // return an object, each prop on the object will become prop on the container
   return {
       //  will bind the loadMetricsDataOnce function to props so we can call it with "this.props.loadMetricsDataOnce"
       // other way without bindActionCreators -> loadMetricsDataOnce: (instanceId) => dispatch(fetchMetricsDataIfNeeded(instanceId))
-      loadMetricsDataOnce:   bindActionCreators(fetchMetricsDataIfNeeded,dispatch),
-      handleStepChange:      bindActionCreators(handleActionStepsChange,dispatch),
-      handleStartTimeChange: bindActionCreators(handleActionStartTimeChange,dispatch)
+      loadMetricsDataOnce:   bindActionCreators(metricsActions.fetchMetricsDataIfNeeded,dispatch),
+      handleStepChange:      bindActionCreators(metricsActions.handleActionStepsChange,dispatch),
+      handleStartTimeChange: bindActionCreators(metricsActions.handleActionStartTimeChange,dispatch)
   }
 }
 

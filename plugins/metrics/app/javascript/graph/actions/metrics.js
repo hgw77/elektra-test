@@ -81,16 +81,6 @@ const handleActionStepsChange= (steps) => (
   }
 );
 
-/*
-const handleActionEndTimeChange= (endTime) => (
-  function(dispatch, getState) {
-    // check if it is allready fetching
-    console.log("handleActionEndTimeChange");
-    // instanceId and startTime already in the store
-    return dispatch(fetchMetricsData(undefined,undefined,endTime));
-  }
-);
-*/
 // fetch real data from backend and put it into the reducer
 const fetchMetricsData= (instanceId, startTime, endTime, steps) =>
   function(dispatch, getState) {
@@ -123,8 +113,7 @@ const fetchMetricsData= (instanceId, startTime, endTime, steps) =>
     }
   }
 
-// export actions that are public and used in container where
-// actions are dispatched
+// export actions that are public and used in container where actions are dispatched for related component
 export {
   fetchMetricsDataIfNeeded,
   handleActionStartTimeChange,
