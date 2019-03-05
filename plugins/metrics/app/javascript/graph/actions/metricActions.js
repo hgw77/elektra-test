@@ -60,7 +60,7 @@ const fetchMetricsDataIfNeeded= (instanceId) => (
   }
 );
 
-const handleActionStartTimeChange= (startTime) => (
+const handleStartTimeChange= (startTime) => (
   function(dispatch, getState) {
     // check if it is allready fetching
     console.log("handleActionStartTimeChange");
@@ -69,7 +69,7 @@ const handleActionStartTimeChange= (startTime) => (
   }
 );
 
-const handleActionStepsChange= (steps) => (
+const handleStepsChange= (steps) => (
   function(dispatch, getState) {
     // check if it is allready fetching
     console.log("handleActionStepsChange");
@@ -116,6 +116,6 @@ const fetchMetricsData= (instanceId, startTime, endTime, steps) =>
 // export actions that are public and used in container where actions are dispatched for related component
 export {
   fetchMetricsDataIfNeeded,
-  handleActionStartTimeChange,
-  handleActionStepsChange
+  handleStartTimeChange,
+  handleStepsChange
 }

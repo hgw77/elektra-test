@@ -1,15 +1,15 @@
 import { connect } from  'react-redux';
 // helper to map actions to props
 import { bindActionCreators } from 'redux';
-// import related component
-import GraphData from '../components/cpu_graph.jsx';
+// import related view
+import cpuMetrics from '../components/cpuMetricsPage.jsx';
 // import all actions
-import * as metricsActions from '../actions/metrics'
+import * as metricActions from '../actions/metricActions'
 /*
 // import dedicated actions
 import {
-  handleActionStartTimeChange,
-  handleActionStepsChange,
+  handleStartTimeChange,
+  handleStepsChange,
   fetchMetricsDataIfNeeded,
 } from '../actions/metrics'
 */
@@ -33,15 +33,15 @@ function mapDispatchToProps(dispatch) {
   return {
       //  will bind the loadMetricsDataOnce function to props so we can call it with "this.props.loadMetricsDataOnce"
       // other way without bindActionCreators -> loadMetricsDataOnce: (instanceId) => dispatch(fetchMetricsDataIfNeeded(instanceId))
-      loadMetricsDataOnce:   bindActionCreators(metricsActions.fetchMetricsDataIfNeeded,dispatch),
-      handleStepChange:      bindActionCreators(metricsActions.handleActionStepsChange,dispatch),
-      handleStartTimeChange: bindActionCreators(metricsActions.handleActionStartTimeChange,dispatch)
+      loadMetricsDataOnce:   bindActionCreators(metricActions.fetchMetricsDataIfNeeded,dispatch),
+      handleStepChange:      bindActionCreators(metricActions.handleStepsChange,dispatch),
+      handleStartTimeChange: bindActionCreators(metricActions.handleStartTimeChange,dispatch)
   }
 }
 
 // subscribe to redux store updates
-// anytime it updates mapStateToProps will be called
-export default connect(mapStateToProps, mapDispatchToProps)(GraphData)
+// anytime it updates mapStateToProps and mapDispatchToProps will be called
+export default connect(mapStateToProps, mapDispatchToProps)(cpuMetrics)
 
 /*
 // old way without extra map functions
@@ -59,8 +59,8 @@ export default connect(
   // declare what actions are exposed to our component as props
   dispatch => ({
     loadMetricsDataOnce: (instanceId) => dispatch(fetchMetricsDataIfNeeded(instanceId)),
-    handleStepChange:(steps) => dispatch(handleActionStepsChange(steps)),
-    handleStartTimeChange: (startTime) => dispatch(handleActionStartTimeChange(startTime))
+    handleStepChange:(steps) => dispatch(handleStepsChange(steps)),
+    handleStartTimeChange: (startTime) => dispatch(handleStartTimeChange(startTime))
   })
 )(GraphData);
 */
