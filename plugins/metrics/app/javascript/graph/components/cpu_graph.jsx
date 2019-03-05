@@ -154,7 +154,7 @@ export default class MetricsGraph extends React.Component {
     // auslagern in eigene componente
     return (
       <div>
-        {this.renderLine("CPU Usage","%",this.props.metrics.data.cpu_usage_average,[0,100])}
+        {this.renderLine("CPU Usage","%",this.props.metrics.data.values,[0,100])}
         {/*this.renderLine("Memory Usage","%",this.props.metrics.data.mem_usage_average,[0,100],true)*/}
         {/*this.renderLine("Network Usage ","Kb/s",this.props.metrics.data.net_usage_average,["auto","auto"],true)*/}
       </div>

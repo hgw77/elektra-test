@@ -32,52 +32,55 @@ module Metrics
       end
 
       # Memory Usage
-      mem_data = services.metrics.get_metrics_for("vcenter_mem_usage_average",instance_id,@scoped_project_id,start_time,end_time,steps)
-      mem_usage_average_values = []
-      unless mem_data.values.nil?
-        mem_usage_average_values = mem_data.values.map{ |v| {
-          x:Time.at(v[0]).strftime("%F %T"),
-          y: (v[1].to_f/10000).round(2) }
-        }
-      end
+      #mem_data = services.metrics.get_metrics_for("vcenter_mem_usage_average",instance_id,@scoped_project_id,start_time,end_time,steps)
+      #mem_usage_average_values = []
+      #unless mem_data.values.nil?
+      #  mem_usage_average_values = mem_data.values.map{ |v| {
+      #    x:Time.at(v[0]).strftime("%F %T"),
+      #    y: (v[1].to_f/10000).round(2) }
+      #  }
+      #end
 
       # Network Usage
-      net_bytesTx_data = services.metrics.get_metrics_for("vcenter_net_bytesTx_average",instance_id,@scoped_project_id,start_time,end_time,steps)
-      net_bytesTx_average_values = []
-      unless net_bytesTx_data.values.nil?
-        net_bytesTx_average_values = net_bytesTx_data.values.map{ |v| {
-          x:Time.at(v[0]).strftime("%F %T"),
-          y: (v[1]) }
-        }
-      end
-      net_bytesRx_data = services.metrics.get_metrics_for("vcenter_net_bytesRx_average",instance_id,@scoped_project_id,start_time,end_time,steps)
-      net_bytesRx_average_values = []
-      unless net_bytesRx_data.values.nil?
-        net_bytesRx_average_values = net_bytesRx_data.values.map{ |v| {
-          x:Time.at(v[0]).strftime("%F %T"),
-          y: (v[1]) }
-        }
-      end
+      #net_bytesTx_data = services.metrics.get_metrics_for("vcenter_net_bytesTx_average",instance_id,@scoped_project_id,start_time,end_time,steps)
+      #net_bytesTx_average_values = []
+      #unless net_bytesTx_data.values.nil?
+      #  net_bytesTx_average_values = net_bytesTx_data.values.map{ |v| {
+      #    x:Time.at(v[0]).strftime("%F %T"),
+      #    y: (v[1]) }
+      #  }
+      #end
+      #net_bytesRx_data = services.metrics.get_metrics_for("vcenter_net_bytesRx_average",instance_id,@scoped_project_id,start_time,end_time,steps)
+      #net_bytesRx_average_values = []
+      #unless net_bytesRx_data.values.nil?
+      #  net_bytesRx_average_values = net_bytesRx_data.values.map{ |v| {
+      #    x:Time.at(v[0]).strftime("%F %T"),
+      #    y: (v[1]) }
+      #  }
+      #end
+
+      #render json: cpu_data
+
 
       render json: {
-        cpu_usage_average: [{
+        values: [{
           id: 'CPU Usage',
           data: cpu_usage_average_values
         }],
-        mem_usage_average: [{
-          id: 'Memory Usage',
-          data: mem_usage_average_values
-        }],
-        net_usage_average: [
-          {
-            id: 'Network BytesTx',
-            data: net_bytesTx_average_values
-          },
-          {
-            id: 'Network BytesRx',
-            data: net_bytesRx_average_values
-          }
-        ]
+        #mem_usage_average: [{
+        #  id: 'Memory Usage',
+        #  data: mem_usage_average_values
+        #}],
+        #net_usage_average: [
+        #  {
+        #    id: 'Network BytesTx',
+        #    data: net_bytesTx_average_values
+        #  },
+        #  {
+        #    id: 'Network BytesRx',
+        #    data: net_bytesRx_average_values
+        #  }
+        #]
       }
     end
 
