@@ -1,5 +1,6 @@
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
+import moment from 'moment';
 
 const requestMetricsData = (state,{ requestedAt }) => {
   return Object.assign({}, state, {
@@ -15,9 +16,22 @@ const requestMetricsDataFailure = (state) => {
 };
 
 const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,receivedAt,steps }) => {
+  var values = metrics_data.values
+  // prepare data for nivo line
+  // https://nivo.rocks/line
+  var data = values.map( value => {
+    // https://devhints.io/moment
+    //console.log (moment.unix(value[0]).format('YYYY-MM-DD HH:mm:ss'));
+    var obj = {
+      x: moment.unix(value[0]).format('YYYY-MM-DD HH:mm:ss'),
+      y: parseFloat(value[1])/100
+    };
+    return obj
+  });
+
   return Object.assign({},state,{
     isFetching: false,
-    data: metrics_data,
+    data: [{ data: data, id: metrics_data.metric.vmware_name }],
     instanceId: instanceId,
     startTime: startTime,
     endTime: endTime,

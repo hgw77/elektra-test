@@ -1,9 +1,7 @@
 import moment from 'moment';
 
 export default {
-  data: {
-    values: []
-    },
+  data: [],
   receivedAt: null,
   updatedAt: null,
   isFetching: false,

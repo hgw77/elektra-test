@@ -58,7 +58,6 @@ class Widget {
   configureAjaxHelper(options) {
     options = options || {}
     const ajaxHelperOptions = Object.assign({},this.config.ajaxHelper,options)
-
     configureAjaxHelper(ajaxHelperOptions)
   }
 

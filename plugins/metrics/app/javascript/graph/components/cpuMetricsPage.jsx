@@ -36,7 +36,7 @@ export default class MetricsGraph extends React.Component {
   handleResolutionChange = (value) => {
     // write new slider state to local state
     var resolution = "medium";
-    if (value > 100 && value < 300) {
+    if (value > 29 && value < 300) {
       resolution = "ultra"
     }
     else if (value > 301 && value < 500) {
@@ -154,7 +154,7 @@ export default class MetricsGraph extends React.Component {
     // auslagern in eigene componente
     return (
       <div>
-        {this.renderLine("CPU Usage","%",this.props.metrics.data.values,[0,100])}
+        {this.renderLine("CPU Usage","%",this.props.metrics.data,[0,100])}
         {/*this.renderLine("Memory Usage","%",this.props.metrics.data.mem_usage_average,[0,100],true)*/}
         {/*this.renderLine("Network Usage ","Kb/s",this.props.metrics.data.net_usage_average,["auto","auto"],true)*/}
       </div>
@@ -182,7 +182,7 @@ export default class MetricsGraph extends React.Component {
           <div>Resolution</div>
           <div style={{ "width":"250px", "marginRight":"15px" }}>
             <Slider
-              min={200}
+              min={30}
               max={999}
               step={5}
               value={this.state.steps}

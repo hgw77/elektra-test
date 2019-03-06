@@ -98,13 +98,13 @@ const fetchMetricsData= (instanceId, startTime, endTime, steps) =>
       // 1) start request by setting the date
       // dispatch is calling the reducer switch
       dispatch(requestMetricsData());
-      // response comes from ajaxHelper
-      // https://maia.eu-de-1.cloud.sap/api/v1/query_range?query=vcenter_net_bytesRx_average%7Binstance_uuid%&start=1551605544.51&end=1551691944.512&step=600&project_id=
-      elektraMetricsAjaxHelper.get(`get_metrics/?instance_id=${instanceId}&start_time=${startTime}&end_time=${endTime}&steps=${steps}`)
-      //ajaxHelper.get(`query_range?query=vcenter_cpu_usage_average&instance_uuid=${instanceId}&start=${startTime}&end=${endTime}&step=${steps}`)
+      // https://prometheus.io/docs/prometheus/latest/querying/api/
+      // https://prometheus.io/docs/prometheus/latest/querying/basics/
+      ajaxHelper.get(`query_range?query=vcenter_cpu_usage_average+{instance_uuid='${instanceId}'}&start=${startTime/1000}&end=${endTime/1000}&step=${steps}`)
         .then( (response) => {
           // 2) to have the data in the store dispatch the response into the reducer
-          return dispatch(receiveMetricsData(response.data, instanceId, startTime, endTime, steps));
+          // console.log(response);
+          return dispatch(receiveMetricsData(response.data.data.result[0], instanceId, startTime, endTime, steps));
         })
         .catch( (error) => {
           dispatch(requestMetricsDataFailure());

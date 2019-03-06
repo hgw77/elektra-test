@@ -21,7 +21,7 @@ import App from './components/application';
 //   ^------------------- render new -------------------------------|
 
 createWidget(__dirname).then((widget) => {
-  maiaHeaders: { 'X-Auth-Token': widget.config.scriptParams.token }
+  const maiaHeaders = { 'X-Auth-Token': widget.config.scriptParams.token }
   widget.configureAjaxHelper(
     {
       baseURL: widget.config.scriptParams.metricsApi,
