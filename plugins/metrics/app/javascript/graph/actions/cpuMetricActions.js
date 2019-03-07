@@ -76,9 +76,9 @@ const fetchMetricsData= (instanceId, startTime, endTime, step) =>
     // get default time frame from state
     var state = getState();
     if (!instanceId) instanceId = state.cpuMetrics.instanceId;
-    if (!startTime) startTime = state.cpuMetrics.cpu.startTime;
-    if (!endTime) endTime = state.cpuMetrics.cpu.endTime;
-    if (!step) step = state.cpuMetrics.cpu.step;
+    if (!startTime) startTime = state.cpuMetrics.startTime;
+    if (!endTime) endTime = state.cpuMetrics.endTime;
+    if (!step) step = state.cpuMetrics.step;
 
     if (startTime > endTime) {
       showError("Start time should not bevore end time!");

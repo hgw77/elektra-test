@@ -41,7 +41,7 @@ const receiveMetricsData = (metrics_data, instanceId, startTime, endTime, step) 
 
 // HELPER
 const shouldFetchMetrics= function(state) {
-  if (state.memoryMetrics.memory.isFetching || state.memoryMetrics.requestedAt) {
+  if (state.memoryMetrics.isFetching || state.memoryMetrics.requestedAt) {
     return false;
   } else {
     return true;
@@ -76,9 +76,9 @@ const fetchMetricsData= (instanceId, startTime, endTime, step) =>
     // get default time frame from state
     var state = getState();
     if (!instanceId) instanceId = state.memoryMetrics.instanceId;
-    if (!startTime) startTime = state.memoryMetrics.memory.startTime;
-    if (!endTime) endTime = state.memoryMetrics.memory.endTime;
-    if (!step) step = state.memoryMetrics.memory.step;
+    if (!startTime) startTime = state.memoryMetrics.startTime;
+    if (!endTime) endTime = state.memoryMetrics.endTime;
+    if (!step) step = state.memoryMetrics.step;
 
     if (startTime > endTime) {
       showError("Start time should not bevore end time!");

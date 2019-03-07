@@ -21,7 +21,7 @@ function mapStateToProps(state, ownProps) {
   // return an object, each prop on the object will become prop on the container
   console.log(state);
   return {
-    metrics: state.memoryMetrics.memory
+    metrics: state.memoryMetrics
   };
 }
 

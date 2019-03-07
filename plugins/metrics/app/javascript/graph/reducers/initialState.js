@@ -8,7 +8,8 @@ export default {
     step: 80,
     receivedAt: null,
     updatedAt: null,
-    isFetching: false
+    isFetching: false,
+    instanceId: "",
   },
   memory: {
     data: [],
@@ -17,8 +18,9 @@ export default {
     step: 80,
     receivedAt: null,
     updatedAt: null,
-    isFetching: false
+    isFetching: false,
+    instanceId: ""
   },
-  instanceId: "",
+
 
 }

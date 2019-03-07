@@ -4,18 +4,14 @@ import moment from 'moment';
 
 const requestMetricsData = (state,{ requestedAt }) => {
   return Object.assign({}, state, {
-    memory: {
-      isFetching: true,
-      requestedAt
-    }
+    isFetching: true,
+    requestedAt
   });
 }
 
 const requestMetricsDataFailure = (state) => {
   return Object.assign({}, state, {
-    memory: {
-      isFetching: false
-    }
+    isFetching: false
   });
 };
 
@@ -34,24 +30,22 @@ const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,re
   });
 
   return Object.assign({},state,{
+    data: [{
+      data: data,
+      id: metrics_data.metric.vmware_name
+    }],
+    startTime: startTime,
+    endTime: endTime,
+    step:step,
+    instanceId: instanceId,
     isFetching: false,
-    memory: {
-      data: [{
-        data: data,
-        id: metrics_data.metric.vmware_name
-      }],
-      startTime: startTime,
-      endTime: endTime,
-      step:step,
-      receivedAt
-    },
-    instanceId: instanceId
+    receivedAt
   });
 }
 
 // all reducers are called on each dispatch!
 // switch to handle the correct action that was dispatched
-export const memoryMetrics = function(state = initialState, action) {
+export const memoryMetrics = function(state = initialState.memory, action) {
   console.log('memory-metrics-reducers-switch');
   console.log(action);
   switch (action.type) {

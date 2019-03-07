@@ -4,18 +4,14 @@ import moment from 'moment';
 
 const requestMetricsData = (state,{ requestedAt }) => {
   return Object.assign({}, state, {
-    cpu: {
-      isFetching: true,
-      requestedAt
-    }
+    isFetching: true,
+    requestedAt
   });
 }
 
 const requestMetricsDataFailure = (state) => {
   return Object.assign({}, state, {
-    cpu: {
-      isFetching: false
-    }
+    isFetching: false
   });
 };
 
@@ -34,24 +30,22 @@ const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,re
   });
 
   return Object.assign({},state,{
-    isFetching: false,
-    cpu: {
-      data: [{
-        data: data,
-        id: metrics_data.metric.vmware_name
-      }],
-      startTime: startTime,
-      endTime: endTime,
-      step:step,
-      receivedAt
-    },
+    data: [{
+      data: data,
+      id: metrics_data.metric.vmware_name
+    }],
+    startTime: startTime,
+    endTime: endTime,
+    step:step,
     instanceId: instanceId,
+    isFetching: false,
+    receivedAt
   });
 }
 
 // all reducers are called on each dispatch!
 // switch to handle the correct action that was dispatched
-export const cpuMetrics = function(state = initialState, action) {
+export const cpuMetrics = function(state = initialState.cpu, action) {
   console.log('cpu-metrics-reducers-switch');
   console.log(action);
   switch (action.type) {
