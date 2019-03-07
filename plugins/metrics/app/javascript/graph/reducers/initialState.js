@@ -8,5 +8,5 @@ export default {
   instanceId: "",
   startTime: parseInt(moment().subtract(1, 'days').format('x')),
   endTime: parseInt(moment().format('x')),
-  steps: 600
+  step: 80
 }

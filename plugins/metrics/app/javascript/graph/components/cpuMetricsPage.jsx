@@ -21,52 +21,25 @@ export default class MetricsGraph extends React.Component {
   	super(props);
     // used for the slider
     this.state = {
-      steps: this.props.metrics.steps,
-      detailResolution: "medium",
+      step: this.props.metrics.step,
+      resolution: 1000,
       epochStartTime: this.props.metrics.startTime,
     }
   }
 
-  // RESOLUTION SLIDER
-  // https://reactjs.org/docs/faq-functions.html
-  // to access this in the function and to call the function within the component
-  // 1. handleChange() {}
-  // 2. in the construktor -> this.handleChange = this.handleChange.bind(this);
-  // or you can use the arrow function like below
-  handleResolutionChange = (value) => {
-    // write new slider state to local state
-    var resolution = "medium";
-    if (value > 29 && value < 300) {
-      resolution = "ultra"
-    }
-    else if (value > 301 && value < 500) {
-      resolution = "high"
-    }
-    else if (value > 800 && value < 1000) {
-      resolution = "low"
-    }
-
-    this.setState({
-      steps: value,
-      detailResolution: resolution
-    })
-    //console.log(this.state);
-  }
-
-  handleResolutionChangeComplete = () => {
-    //console.log('Change event completed')
-    this.props.handleStepChange(this.state.steps);
-  };
-
   // TIMEZOME SLIDER
   handleTimeZoomChange = (epoch) => {
+    var timeFrame = (this.props.metrics.endTime - epoch)/1000; // epoch comes in milliseconds
+    var newStep = parseInt(timeFrame / this.state.resolution);
+    if (newStep < 30) newStep = 30;
     this.setState({
-      epochStartTime: epoch
+      epochStartTime: epoch,
+      step: newStep
     })
   }
 
   handleTimeZoomChangeComplete = () => {
-    this.props.handleStartTimeChange(this.state.epochStartTime);
+    this.props.handleStartTimeChange(this.state.epochStartTime,this.state.step);
   }
 
   // BASIC REACT FUNCTIONS
@@ -179,19 +152,7 @@ export default class MetricsGraph extends React.Component {
           </div>
           <div>{moment(this.state.epochStartTime).fromNow()}</div>
           <span className='toolbar-input-divider'>&ndash;</span>
-          <div>Resolution</div>
-          <div style={{ "width":"250px", "marginRight":"15px" }}>
-            <Slider
-              min={30}
-              max={999}
-              step={5}
-              value={this.state.steps}
-              onChange={this.handleResolutionChange}
-              onChangeComplete={this.handleResolutionChangeComplete}
-              tooltip={false}
-            />
-          </div>
-          <div>{this.state.detailResolution}</div>
+          <div>messure point every {this.state.step}s</div>
         </div>
       </div>
     )

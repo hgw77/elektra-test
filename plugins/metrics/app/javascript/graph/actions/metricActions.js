@@ -27,7 +27,7 @@ const requestMetricsDataFailure = () => {
   return { type: types.REQUEST_METRICS_DATA_FAILURE }
 }
 // this is the data structure that is dispatched into the reducer switch
-const receiveMetricsData = (metrics_data, instanceId, startTime, endTime, steps) => {
+const receiveMetricsData = (metrics_data, instanceId, startTime, endTime, step) => {
   return {
     type: types.RECEIVE_METRICS_DATA,
     metrics_data: metrics_data,
@@ -35,7 +35,7 @@ const receiveMetricsData = (metrics_data, instanceId, startTime, endTime, steps)
     instanceId: instanceId,
     startTime: startTime,
     endTime: endTime,
-    steps: steps
+    step: step
   }
 }
 
@@ -60,26 +60,17 @@ const fetchMetricsDataIfNeeded= (instanceId) => (
   }
 );
 
-const handleStartTimeChange= (startTime) => (
+const handleStartTimeChange= (startTime,step) => (
   function(dispatch, getState) {
     // check if it is allready fetching
     console.log("handleActionStartTimeChange");
     // instanceId already in the store
-    return dispatch(fetchMetricsData(undefined,startTime));
-  }
-);
-
-const handleStepsChange= (steps) => (
-  function(dispatch, getState) {
-    // check if it is allready fetching
-    console.log("handleActionStepsChange");
-    // instanceId already in the store
-    return dispatch(fetchMetricsData(undefined,undefined,undefined,steps));
+    return dispatch(fetchMetricsData(undefined,startTime,undefined,step));
   }
 );
 
 // fetch real data from backend and put it into the reducer
-const fetchMetricsData= (instanceId, startTime, endTime, steps) =>
+const fetchMetricsData= (instanceId, startTime, endTime, step) =>
   function(dispatch, getState) {
     console.log("fetchMetricsData");
 
@@ -88,7 +79,7 @@ const fetchMetricsData= (instanceId, startTime, endTime, steps) =>
     if (!instanceId) instanceId = state.metrics.instanceId;
     if (!startTime) startTime = state.metrics.startTime;
     if (!endTime) endTime = state.metrics.endTime;
-    if (!steps) steps = state.metrics.steps;
+    if (!step) step = state.metrics.step;
 
     if (startTime > endTime) {
       showError("Start time should not bevore end time!");
@@ -100,11 +91,11 @@ const fetchMetricsData= (instanceId, startTime, endTime, steps) =>
       dispatch(requestMetricsData());
       // https://prometheus.io/docs/prometheus/latest/querying/api/
       // https://prometheus.io/docs/prometheus/latest/querying/basics/
-      ajaxHelper.get(`query_range?query=vcenter_cpu_usage_average+{instance_uuid='${instanceId}'}&start=${startTime/1000}&end=${endTime/1000}&step=${steps}`)
+      ajaxHelper.get(`query_range?query=vcenter_cpu_usage_average+{instance_uuid='${instanceId}'}&start=${startTime/1000}&end=${endTime/1000}&step=${step}`)
         .then( (response) => {
           // 2) to have the data in the store dispatch the response into the reducer
           // console.log(response);
-          return dispatch(receiveMetricsData(response.data.data.result[0], instanceId, startTime, endTime, steps));
+          return dispatch(receiveMetricsData(response.data.data.result[0], instanceId, startTime, endTime, step));
         })
         .catch( (error) => {
           dispatch(requestMetricsDataFailure());
@@ -117,5 +108,4 @@ const fetchMetricsData= (instanceId, startTime, endTime, steps) =>
 export {
   fetchMetricsDataIfNeeded,
   handleStartTimeChange,
-  handleStepsChange
 }

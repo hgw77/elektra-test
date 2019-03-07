@@ -15,7 +15,7 @@ const requestMetricsDataFailure = (state) => {
   });
 };
 
-const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,receivedAt,steps }) => {
+const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,receivedAt,step }) => {
   var values = metrics_data.values
   // prepare data for nivo line
   // https://nivo.rocks/line
@@ -35,7 +35,7 @@ const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,re
     instanceId: instanceId,
     startTime: startTime,
     endTime: endTime,
-    steps:steps,
+    step:step,
     receivedAt
   });
 }

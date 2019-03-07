@@ -9,7 +9,7 @@ import * as metricActions from '../actions/metricActions'
 // import dedicated actions
 import {
   handleStartTimeChange,
-  handleStepsChange,
+  handlestepChange,
   fetchMetricsDataIfNeeded,
 } from '../actions/metrics'
 */
@@ -34,7 +34,6 @@ function mapDispatchToProps(dispatch) {
       //  will bind the loadMetricsDataOnce function to props so we can call it with "this.props.loadMetricsDataOnce"
       // other way without bindActionCreators -> loadMetricsDataOnce: (instanceId) => dispatch(fetchMetricsDataIfNeeded(instanceId))
       loadMetricsDataOnce:   bindActionCreators(metricActions.fetchMetricsDataIfNeeded,dispatch),
-      handleStepChange:      bindActionCreators(metricActions.handleStepsChange,dispatch),
       handleStartTimeChange: bindActionCreators(metricActions.handleStartTimeChange,dispatch)
   }
 }
@@ -59,7 +58,7 @@ export default connect(
   // declare what actions are exposed to our component as props
   dispatch => ({
     loadMetricsDataOnce: (instanceId) => dispatch(fetchMetricsDataIfNeeded(instanceId)),
-    handleStepChange:(steps) => dispatch(handleStepsChange(steps)),
+    handleStepChange:(step) => dispatch(handlestepChange(step)),
     handleStartTimeChange: (startTime) => dispatch(handleStartTimeChange(startTime))
   })
 )(GraphData);
