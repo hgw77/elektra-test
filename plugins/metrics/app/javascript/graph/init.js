@@ -1,5 +1,6 @@
 // this is a special file needed for elektra to bring react to work
 import { createWidget } from 'widget'
+// connect to store
 import * as reducers from './reducers';
 import App from './components/application';
 

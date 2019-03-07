@@ -18,18 +18,18 @@ const elektraMetricsAjaxHelper = pluginAjaxHelper('metrics', {
 // this is the data structure that is dispatched into the reducer switch
 const requestMetricsData = () => {
   return {
-    type: types.REQUEST_METRICS_DATA,
+    type: types.REQUEST_MEMORY_METRICS_DATA,
     requestedAt: Date.now()
   }
 }
 // this is the data structure that is dispatched into the reducer switch
 const requestMetricsDataFailure = () => {
-  return { type: types.REQUEST_METRICS_DATA_FAILURE }
+  return { type: types.REQUEST_MEMORY_METRICS_DATA_FAILURE }
 }
 // this is the data structure that is dispatched into the reducer switch
 const receiveMetricsData = (metrics_data, instanceId, startTime, endTime, step) => {
   return {
-    type: types.RECEIVE_METRICS_DATA,
+    type: types.RECEIVE_MEMORY_METRICS_DATA,
     metrics_data: metrics_data,
     receivedAt: Date.now(),
     instanceId: instanceId,
@@ -41,8 +41,7 @@ const receiveMetricsData = (metrics_data, instanceId, startTime, endTime, step) 
 
 // HELPER
 const shouldFetchMetrics= function(state) {
-  const { metrics } = state;
-  if (metrics.isFetching || metrics.requestedAt) {
+  if (state.memoryMetrics.memory.isFetching || state.memoryMetrics.requestedAt) {
     return false;
   } else {
     return true;
@@ -52,7 +51,7 @@ const shouldFetchMetrics= function(state) {
 // ACTIONS
 const fetchMetricsDataIfNeeded= (instanceId) => (
   function(dispatch, getState) {
-    console.log("fetchMetricsDataIfNeeded");
+    console.log("memoryfetchMetricsDataIfNeeded");
     // check if it is allready fetching
     if (shouldFetchMetrics(getState())) {
       return dispatch(fetchMetricsData(instanceId));
@@ -76,10 +75,10 @@ const fetchMetricsData= (instanceId, startTime, endTime, step) =>
 
     // get default time frame from state
     var state = getState();
-    if (!instanceId) instanceId = state.metrics.instanceId;
-    if (!startTime) startTime = state.metrics.startTime;
-    if (!endTime) endTime = state.metrics.endTime;
-    if (!step) step = state.metrics.step;
+    if (!instanceId) instanceId = state.memoryMetrics.instanceId;
+    if (!startTime) startTime = state.memoryMetrics.memory.startTime;
+    if (!endTime) endTime = state.memoryMetrics.memory.endTime;
+    if (!step) step = state.memoryMetrics.memory.step;
 
     if (startTime > endTime) {
       showError("Start time should not bevore end time!");
@@ -91,7 +90,7 @@ const fetchMetricsData= (instanceId, startTime, endTime, step) =>
       dispatch(requestMetricsData());
       // https://prometheus.io/docs/prometheus/latest/querying/api/
       // https://prometheus.io/docs/prometheus/latest/querying/basics/
-      ajaxHelper.get(`query_range?query=vcenter_cpu_usage_average+{instance_uuid='${instanceId}'}&start=${startTime/1000}&end=${endTime/1000}&step=${step}`)
+      ajaxHelper.get(`query_range?query=vcenter_mem_usage_average+{instance_uuid='${instanceId}'}&start=${startTime/1000}&end=${endTime/1000}&step=${step}`)
         .then( (response) => {
           // 2) to have the data in the store dispatch the response into the reducer
           // console.log(response);

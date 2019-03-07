@@ -49,7 +49,7 @@ export default class MetricsGraph extends React.Component {
   // https://developmentarc.gitbooks.io/react-indepth/content/life_cycle/update/component_will_receive_props.html
   componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps');
-    //console.log(nextProps);
+    console.log(nextProps);
   }
 
   // https://reactjs.org/docs/react-component.html#componentdidmount
@@ -92,10 +92,9 @@ export default class MetricsGraph extends React.Component {
         { this.toolBar() }
         { this.props.metrics.isFetching ? <div><span className='spinner'> </span><span>L O A D I N G</span></div> :
         <Graph
-          name="CPU Usage"
+          name="Memory Usage"
           unit="%"
           data={this.props.metrics.data}
-          yScale={[0,100]}
           resolution={this.state.resolution}/>
         }
       </div>

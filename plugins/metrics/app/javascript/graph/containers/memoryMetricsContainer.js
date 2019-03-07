@@ -2,9 +2,9 @@ import { connect } from  'react-redux';
 // helper to map actions to props
 import { bindActionCreators } from 'redux';
 // import related view
-import cpuMetricsPage from '../components/cpuMetricsPage.jsx';
+import memoryMetricsPage from '../components/memoryMetricsPage.jsx';
 // import all actions
-import * as metricActions from '../actions/cpuMetricActions'
+import * as metricActions from '../actions/memoryMetricActions'
 /*
 // import dedicated actions
 import {
@@ -21,7 +21,7 @@ function mapStateToProps(state, ownProps) {
   // return an object, each prop on the object will become prop on the container
   console.log(state);
   return {
-    metrics:    state.cpuMetrics.cpu
+    metrics: state.memoryMetrics.memory
   };
 }
 
@@ -38,7 +38,7 @@ function mapDispatchToProps(dispatch) {
 
 // subscribe to redux store updates
 // anytime it updates mapStateToProps and mapDispatchToProps will be called
-export default connect(mapStateToProps, mapDispatchToProps)(cpuMetricsPage)
+export default connect(mapStateToProps, mapDispatchToProps)(memoryMetricsPage)
 
 /*
 // old way without extra map functions

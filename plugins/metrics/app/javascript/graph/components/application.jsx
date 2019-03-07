@@ -2,10 +2,12 @@ import { HashRouter, Route, Redirect } from 'react-router-dom'
 import Tabs from './tabs';
 
 import cpuMetrics from '../containers/cpuMetricsContainer'
+import memoryMetrics from '../containers/memoryMetricsContainer'
 // containers: react component thats uses the store and supply props to the child components
 
 const tabsConfig = [
-  { to: '/cpu', label: 'CPU Usage', component: cpuMetrics }
+  { to: '/cpu', label: 'CPU Usage', component: cpuMetrics },
+  { to: '/memory', label: 'Memory Usage', component: memoryMetrics }
 ]
 
 // render all components inside a hash router
