@@ -20,10 +20,10 @@ import {
 function mapStateToProps(state, ownProps) {
   // return an object, each prop on the object will become prop on the container
   return {
-    metrics:    state.metrics,
-    startTime:  state.startTime,
-    endTime:    state.endTime,
-    isFetching: state.isFetching
+    metrics:    state.metrics
+    //startTime:  state.startTime,
+    //endTime:    state.endTime,
+    //isFetching: state.isFetching
   };
 }
 

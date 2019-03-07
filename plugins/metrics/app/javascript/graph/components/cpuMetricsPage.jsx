@@ -9,6 +9,8 @@ import Datetime from 'react-datetime'
 import Slider from 'react-rangeslider'
 // https://www.npmjs.com/package/react-moment
 import moment from 'moment'
+// render graph
+import Graph from './common/Graph'
 
 // https://www.npmjs.com/package/react-datetime#selectable-dates
 const isValidDate = (date) =>
@@ -22,7 +24,7 @@ export default class MetricsGraph extends React.Component {
     // used for the slider
     this.state = {
       step: this.props.metrics.step,
-      resolution: 1000,
+      resolution: 1100,
       epochStartTime: this.props.metrics.startTime,
     }
   }
@@ -59,81 +61,6 @@ export default class MetricsGraph extends React.Component {
     this.props.loadMetricsDataOnce(this.props.instanceId);
   }
 
-  renderLine(name,unit,data,y_scale = ["auto","auto"],enable_area = false) {
-    var timeTickRotation = 0;
-    var marginBottom = 40;
-    return (
-      <div>
-        <Line
-        width={1100}
-        height={400}
-        margin={{
-          top: 20,
-          right: 50,
-          bottom: marginBottom,
-          left: 80
-        }}
-        data={data}
-        animate={true}
-        enableDots={false}
-        curve="basis"
-        enableArea={enable_area}
-        // https://github.com/plouc/nivo/issues/283
-        // https://github.com/d3/d3-scale
-        // http://nivo.rocks/line
-        xScale={{type: 'time',format: "%Y-%m-%d %H:%M:%S" ,precision: 'minute'}}
-        yScale={{type: 'linear',stacked: false, "min": y_scale[0],"max": y_scale[1]}}
-        axisBottom={{
-          "orient": "bottom",
-          "tickSize": 5,
-          "tickPadding": 15,
-          "tickRotation": timeTickRotation,
-          "legend": "",
-          "legendOffset": 40,
-          "legendPosition": "center",
-          "format":'%b %d %H:%M'}}
-        axisLeft={{
-            "orient": "left",
-            "tickSize": 5,
-            "tickPadding": 10,
-            "tickRotation": 0,
-            "legend": name+" ("+unit+")",
-            "legendOffset": -45,
-            "legendPosition": "center"
-        }}
-        axisRight={{
-            "orient": "right",
-            "tickSize": 5,
-            "tickPadding": 10,
-            "tickRotation": 0,
-            "legend": "",
-            "legendOffset": -45,
-            "legendPosition": "center"
-        }}
-      />
-    </div>
-    )
-  }
-
-  renderGraph() {
-    // console.log('renderGraph');
-    // console.log(this.getData());
-    var timeTickRotation = 0;
-    var marginBottom = 40;
-    if(this.props.metrics.data.length>700 || this.props.metrics.data.length<400){
-      timeTickRotation = 90;
-      marginBottom = 90;
-    }
-    // auslagern in eigene componente
-    return (
-      <div>
-        {this.renderLine("CPU Usage","%",this.props.metrics.data,[0,100])}
-        {/*this.renderLine("Memory Usage","%",this.props.metrics.data.mem_usage_average,[0,100],true)*/}
-        {/*this.renderLine("Network Usage ","Kb/s",this.props.metrics.data.net_usage_average,["auto","auto"],true)*/}
-      </div>
-    )
-  };
-
   toolBar() {
     return (
       <div>
@@ -163,7 +90,14 @@ export default class MetricsGraph extends React.Component {
     return (
       <div>
         { this.toolBar() }
-        { this.props.metrics.isFetching ? <div><span className='spinner'> </span><span>L O A D I N G</span></div> : this.renderGraph() }
+        { this.props.metrics.isFetching ? <div><span className='spinner'> </span><span>L O A D I N G</span></div> :
+        <Graph
+          name="CPU Usage"
+          unit="%"
+          data={this.props.metrics.data}
+          yScale={[0,100]}
+          resolution={this.state.resolution}/>
+        }
       </div>
     )
   }
