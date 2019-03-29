@@ -1,21 +1,9 @@
 import { Link } from 'react-router-dom';
 import { TransitionGroup } from 'react-transition-group';
 import { FadeTransition } from 'lib/components/transitions';
-// http://nivo.rocks/line/
-import { Line, ResponsiveLine } from '@nivo/line';
-// https://www.npmjs.com/package/react-datetime
-import Datetime from 'react-datetime'
-// https://whoisandy.github.io/react-rangeslider/
-import Slider from 'react-rangeslider'
-// https://www.npmjs.com/package/react-moment
-import moment from 'moment'
-// render graph
-import Graph from './common/Graph'
 
-// https://www.npmjs.com/package/react-datetime#selectable-dates
-const isValidDate = (date) =>
-  // do not allow dates that are in the future
-  !moment(date).isAfter()
+import Graph from './common/Graph'
+import ToolBar from './common/ToolBar'
 
 export default class MetricsGraph extends React.Component {
 
@@ -61,35 +49,14 @@ export default class MetricsGraph extends React.Component {
     this.props.loadMetricsDataOnce(this.props.instanceId);
   }
 
-  toolBar() {
-    return (
-      <div>
-        <div className='toolbar toolbar-controlcenter'>
-          <div>Time Zoom</div>
-          <div style={{ "width":"250px", "marginRight":"15px" }}>
-            <Slider
-              min={parseInt(moment().subtract(7, 'days').format('x'))}
-              max={parseInt(moment().subtract(1, 'hour').format('x'))}
-              step={600}
-              value={this.state.epochStartTime}
-              onChange={this.handleTimeZoomChange}
-              onChangeComplete={this.handleTimeZoomChangeComplete}
-              tooltip={false}
-            />
-          </div>
-          <div>{moment(this.state.epochStartTime).fromNow()}</div>
-          <span className='toolbar-input-divider'>&ndash;</span>
-          <div>messure point every {this.state.step}s</div>
-        </div>
-      </div>
-    )
-  }
-
   render(){
-    //console.log('render MetricsGraph');
     return (
       <div>
-        { this.toolBar() }
+        <ToolBar
+          state={this.state}
+          onChange={this.handleTimeZoomChange}
+          onChangeComplete={this.handleTimeZoomChangeComplete}
+        />
         { this.props.metrics.isFetching ? <div><span className='spinner'> </span><span>L O A D I N G</span></div> :
         <Graph
           name="Memory Usage"
