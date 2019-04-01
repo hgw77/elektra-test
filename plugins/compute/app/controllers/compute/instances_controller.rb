@@ -80,6 +80,7 @@ module Compute
       end.values
 
       # this data is used in the react metrics app
+      # see also view/compute/instances/show.html.haml
       @js_data = {
         token:   current_user.token,
         metrics_api: current_user.service_url('metrics'),

@@ -36,8 +36,8 @@ export default class MetricsGraph extends React.Component {
   // This method is called when props are passed to the Component instance.
   // https://developmentarc.gitbooks.io/react-indepth/content/life_cycle/update/component_will_receive_props.html
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps');
-    console.log(nextProps);
+    //console.log('componentWillReceiveProps');
+    //console.log(nextProps);
   }
 
   // https://reactjs.org/docs/react-component.html#componentdidmount
@@ -45,7 +45,7 @@ export default class MetricsGraph extends React.Component {
   // Initialization that requires DOM nodes should go here. If you need to load data
   // from a remote endpoint, this is a good place to instantiate the network request.
   componentDidMount() {
-    console.log('componentDidMount');
+    //console.log('componentDidMount');
     this.props.loadMetricsDataOnce(this.props.instanceId);
   }
 
