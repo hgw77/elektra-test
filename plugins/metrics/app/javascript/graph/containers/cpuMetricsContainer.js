@@ -5,21 +5,12 @@ import { bindActionCreators } from 'redux';
 import cpuMetricsPage from '../components/cpuMetricsPage.jsx';
 // import all actions
 import * as metricActions from '../actions/cpuMetricActions'
-/*
-// import dedicated actions
-import {
-  handleStartTimeChange,
-  handlestepChange,
-  fetchMetricsDataIfNeeded,
-} from '../actions/metrics'
-*/
 
 // declare what part of the store we want to attach to our component as props
 // state:    is the state within our Redux store
 // ownProps: is a reference to the components own props, mostly used to accessing routing related props injected by React Router
 function mapStateToProps(state, ownProps) {
   // return an object, each prop on the object will become prop on the container
-  console.log(state);
   return {
     metrics:    state.cpuMetrics
   };

@@ -6,8 +6,8 @@ import memoryMetrics from '../containers/memoryMetricsContainer'
 // containers: react component thats uses the store and supply props to the child components
 
 const tabsConfig = [
-  { to: '/cpu', label: 'CPU Usage', component: cpuMetrics },
-  { to: '/memory', label: 'Memory Usage', component: memoryMetrics }
+  { to: '/cpu', label: 'CPU', component: cpuMetrics },
+  { to: '/memory', label: 'Memory', component: memoryMetrics }
 ]
 
 // render all components inside a hash router
