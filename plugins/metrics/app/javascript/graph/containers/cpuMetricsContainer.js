@@ -20,7 +20,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   // return an object, each prop on the object will become prop on the container
   return {
-      //  will bind the loadMetricsDataOnce function to props so we can call it with "this.props.loadMetricsDataOnce"
+      // will bind the loadMetricsDataOnce function to props so we can call it with "this.props.loadMetricsDataOnce"
       // other way without bindActionCreators -> loadMetricsDataOnce: (instanceId) => dispatch(fetchMetricsDataIfNeeded(instanceId))
       loadMetricsDataOnce:   bindActionCreators(metricActions.fetchMetricsDataIfNeeded,dispatch),
       handleStartTimeChange: bindActionCreators(metricActions.handleStartTimeChange,dispatch)

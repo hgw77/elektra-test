@@ -9,7 +9,7 @@ export default {
     receivedAt: null,
     updatedAt: null,
     isFetching: false,
-    instanceId: "",
+    instanceId: ""
   },
   memory: {
     data: [],
