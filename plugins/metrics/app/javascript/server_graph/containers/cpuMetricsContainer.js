@@ -12,7 +12,7 @@ import * as metricActions from '../actions/cpuMetricActions'
 function mapStateToProps(state, ownProps) {
   // return an object, each prop on the object will become prop on the container
   return {
-    metrics:    state.cpuMetrics
+    metrics: state.cpuMetrics
   };
 }
 

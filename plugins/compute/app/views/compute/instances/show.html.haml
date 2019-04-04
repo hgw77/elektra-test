@@ -61,7 +61,7 @@
             %code= @log || ''
 
       .tab-pane{role:"tabpanel", id:"metrics_graph"}
-        = javascript_pack_tag("metrics_graph", data: @js_data )
+        = javascript_pack_tag("metrics_server_graph", data: @js_data )
 
       .tab-pane{role:"tabpanel", id:"specs"}
         - if @instance.flavor
