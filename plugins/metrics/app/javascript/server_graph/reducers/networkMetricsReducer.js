@@ -41,11 +41,11 @@ const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,re
     data: [
       {
         data: dataTx,
-        id: "Net-TX "+metrics_data.tx.metric.vmware_name
+        id: "Net-TX",
       },
       {
         data: dataRx,
-        id: "Net-RX "+metrics_data.rx.metric.vmware_name
+        id: "Net-RX",
       }
     ],
     startTime: startTime,

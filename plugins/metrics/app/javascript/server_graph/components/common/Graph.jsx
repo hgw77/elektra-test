@@ -1,6 +1,6 @@
 import { Line, ResponsiveLine } from '@nivo/line';
 
-const Graph = ({name,unit,data,yScale = ["auto","auto"],enableArea = false,resolution}) => {
+const Graph = ({name,data,yScale = ["auto","auto"],enableArea = false,resolution,legendUnit = ""}) => {
   var timeTickRotation = 0;
   var marginBottom = 40;
   return (
@@ -40,7 +40,7 @@ const Graph = ({name,unit,data,yScale = ["auto","auto"],enableArea = false,resol
           "tickSize": 5,
           "tickPadding": 10,
           "tickRotation": 0,
-          "legend": name+" ("+unit+")",
+          "legend": name+" ("+legendUnit+")",
           "legendOffset": -45,
           "legendPosition": "center"
       }}
@@ -53,6 +53,9 @@ const Graph = ({name,unit,data,yScale = ["auto","auto"],enableArea = false,resol
           "legendOffset": -45,
           "legendPosition": "center"
       }}
+      tooltipFormat={ value =>
+        `${value} ${legendUnit}`
+      }
     />
   </div>
   )

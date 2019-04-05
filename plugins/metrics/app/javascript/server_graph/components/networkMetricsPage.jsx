@@ -27,15 +27,15 @@ export default class MetricsGraph extends React.Component {
           startTime={this.props.metrics.startTime}
           endTime={this.props.metrics.endTime}
           handleStartTimeChange={this.props.handleStartTimeChange}
+          isFetching={this.props.metrics.isFetching}
         />
-        { this.props.metrics.isFetching ? <div><span className='spinner'> </span><span>L O A D I N G</span></div> :
         <Graph
           name="Network Bantwidth"
-          unit="kb/s"
           enableArea={true}
           data={this.props.metrics.data}
-          resolution={this.state.resolution}/>
-        }
+          resolution={this.state.resolution}
+          legendUnit="kb/s"
+        />
       </div>
     )
   }

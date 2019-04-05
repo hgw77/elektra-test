@@ -32,7 +32,7 @@ const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,re
   return Object.assign({},state,{
     data: [{
       data: data,
-      id: metrics_data.metric.vmware_name
+      id: "CPU Usage"
     }],
     startTime: startTime,
     endTime: endTime,
