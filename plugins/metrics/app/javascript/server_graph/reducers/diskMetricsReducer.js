@@ -30,22 +30,22 @@ const prepareData = (rawData) => {
 }
 
 const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,receivedAt,step }) => {
-  var valuesTx = metrics_data.tx
-  var valuesRx = metrics_data.rx;
+  var valuesRead = metrics_data.read
+  var valuesWrite = metrics_data.write;
   // prepare data for nivo line
   // https://nivo.rocks/line
-  var dataTx = prepareData(valuesTx.values);
-  var dataRx = prepareData(valuesRx.values);
+  var dataRead = prepareData(valuesRead.values);
+  var dataWrite = prepareData(valuesWrite.values);
 
   return Object.assign({},state,{
     data: [
       {
-        data: dataTx,
-        id: "Transmitted",
+        data: dataRead,
+        id: "Read",
       },
       {
-        data: dataRx,
-        id: "Received",
+        data: dataWrite,
+        id: "Write",
       }
     ],
     startTime: startTime,
@@ -59,15 +59,15 @@ const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,re
 
 // all reducers are called on each dispatch!
 // switch to handle the correct action that was dispatched
-export const networkMetrics = function(state = initialState.network, action) {
-  console.log('network-metrics-reducers-switch');
+export const diskMetrics = function(state = initialState.disk, action) {
+  console.log('disk-metrics-reducers-switch');
   console.log(action);
   switch (action.type) {
-    case types.RECEIVE_NETWORK_METRICS_DATA:
+    case types.RECEIVE_DISK_METRICS_DATA:
       return receiveMetricsData(state,action);
-    case types.REQUEST_NETWORK_METRICS_DATA:
+    case types.REQUEST_DISK_METRICS_DATA:
       return requestMetricsData(state,action);
-    case types.REQUEST_NETWORK_METRICS_DATA_FAILURE:
+    case types.REQUEST_DISK_METRICS_DATA_FAILURE:
       return requestMetricsDataFailure(state,action);
 
     // return new state

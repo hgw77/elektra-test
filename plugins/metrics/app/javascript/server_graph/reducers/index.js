@@ -3,3 +3,4 @@
 export { cpuMetrics } from './cpuMetricsReducer';
 export { memoryMetrics } from './memoryMetricsReducer';
 export { networkMetrics } from './networkMetricsReducer';
+export { diskMetrics } from './diskMetricsReducer';
