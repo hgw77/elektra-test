@@ -47,7 +47,7 @@ export default class ToolBar extends React.Component {
           </div>
           <div>{moment(this.state.epochStartTime).fromNow()}</div>
           <span className='toolbar-input-divider'>&ndash;</span>
-          <div>messure point every {this.state.step}s</div>
+          <div>messure point {moment.duration(this.state.step,'seconds').humanize()}</div>
         </div>
       </div>
     )

@@ -1,6 +1,6 @@
 import { Line, ResponsiveLine } from '@nivo/line';
 
-const Graph = ({name,unit,data,y_scale = ["auto","auto"],enable_area = false,resolution}) => {
+const Graph = ({name,unit,data,yScale = ["auto","auto"],enableArea = false,resolution}) => {
   var timeTickRotation = 0;
   var marginBottom = 40;
   return (
@@ -18,12 +18,14 @@ const Graph = ({name,unit,data,y_scale = ["auto","auto"],enable_area = false,res
       animate={true}
       enableDots={false}
       curve="basis"
-      enableArea={enable_area}
+      enableArea={enableArea}
+      areaBlendMode='difference'
+      stacked={false}
       // https://github.com/plouc/nivo/issues/283
       // https://github.com/d3/d3-scale
       // http://nivo.rocks/line
       xScale={{type: 'time',format: "%Y-%m-%d %H:%M:%S" ,precision: 'minute'}}
-      yScale={{type: 'linear',stacked: false, "min": y_scale[0],"max": y_scale[1]}}
+      yScale={{type: 'linear',stacked: false, "min": yScale[0],"max": yScale[1]}}
       axisBottom={{
         "orient": "bottom",
         "tickSize": 5,

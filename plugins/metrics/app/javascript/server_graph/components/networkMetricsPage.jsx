@@ -30,11 +30,10 @@ export default class MetricsGraph extends React.Component {
         />
         { this.props.metrics.isFetching ? <div><span className='spinner'> </span><span>L O A D I N G</span></div> :
         <Graph
-          name="Memory Usage"
-          unit="%"
-          data={this.props.metrics.data}
-          yScale={[0,100]}
+          name="Network Bantwidth"
+          unit="kb/s"
           enableArea={true}
+          data={this.props.metrics.data}
           resolution={this.state.resolution}/>
         }
       </div>

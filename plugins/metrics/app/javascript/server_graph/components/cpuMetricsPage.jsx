@@ -22,6 +22,7 @@ export default class MetricsGraph extends React.Component {
     return (
       <div>
         <ToolBar
+          resolution={this.state.resolution}
           step={this.props.metrics.step}
           startTime={this.props.metrics.startTime}
           endTime={this.props.metrics.endTime}
