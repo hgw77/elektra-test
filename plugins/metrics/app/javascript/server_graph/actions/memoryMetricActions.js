@@ -90,6 +90,7 @@ const fetchMetricsData= (instanceId, startTime, endTime, step) =>
       dispatch(requestMetricsData());
       // https://prometheus.io/docs/prometheus/latest/querying/api/
       // https://prometheus.io/docs/prometheus/latest/querying/basics/
+      // https://documentation.global.cloud.sap/docs/metrics/metrics.html
       ajaxHelper.get(`query_range?query=vcenter_mem_usage_average+{instance_uuid='${instanceId}'}&start=${startTime/1000}&end=${endTime/1000}&step=${step}`)
         .then( (response) => {
           // 2) to have the data in the store dispatch the response into the reducer

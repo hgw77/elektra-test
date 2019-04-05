@@ -68,11 +68,6 @@ PATH
     dns_service (0.0.1)
 
 PATH
-  remote: plugins/graph_test
-  specs:
-    graph_test (0.0.1)
-
-PATH
   remote: plugins/identity
   specs:
     identity (0.0.1)
@@ -129,11 +124,6 @@ PATH
   remote: plugins/object_storage
   specs:
     object_storage (0.0.1)
-
-PATH
-  remote: plugins/react_demo
-  specs:
-    react_demo (0.0.1)
 
 PATH
   remote: plugins/reports
@@ -590,7 +580,6 @@ DEPENDENCIES
   font-awesome-sass
   foreman
   friendly_id
-  graph_test!
   guard-rspec
   haml-rails
   high_voltage
@@ -622,7 +611,6 @@ DEPENDENCIES
   rails-controller-testing
   rails_stdout_logging
   react-rails
-  react_demo!
   redcarpet
   reports!
   resource_management!
