@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { TransitionGroup } from 'react-transition-group';
 import { FadeTransition } from 'lib/components/transitions';
-
+import moment from 'moment';
 import Graph from './common/Graph'
 import ToolBar from './common/ToolBar'
 
@@ -15,7 +15,7 @@ export default class MetricsGraph extends React.Component {
   }
 
   componentDidMount() {
-    this.props.loadMetricsDataOnce(this.props.instanceId);
+    this.props.loadMetricsDataOnce(this.props.instanceId, parseInt(moment().format('X')));
   }
 
   render(){

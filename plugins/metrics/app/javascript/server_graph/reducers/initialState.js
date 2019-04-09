@@ -4,7 +4,6 @@ export default {
   cpu: {
     data: [],
     sliderValue: parseInt(moment().subtract(1, 'days').format('X')),
-    initalEndTime: parseInt(moment().format('X')),
     step: 80,
     receivedAt: null,
     isFetching: false,
@@ -13,7 +12,6 @@ export default {
   memory: {
     data: [],
     sliderValue: parseInt(moment().subtract(1, 'days').format('X')),
-    initalEndTime: parseInt(moment().format('X')),
     step: 80,
     receivedAt: null,
     isFetching: false,
@@ -22,7 +20,6 @@ export default {
   network: {
     data: [],
     sliderValue: parseInt(moment().subtract(1, 'days').format('X')),
-    initalEndTime: parseInt(moment().format('X')),
     step: 80,
     receivedAt: null,
     isFetching: false,
@@ -31,7 +28,6 @@ export default {
   disk: {
     data: [],
     sliderValue: parseInt(moment().subtract(1, 'days').format('X')),
-    initalEndTime: parseInt(moment().format('X')),
     step: 80,
     receivedAt: null,
     isFetching: false,

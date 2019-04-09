@@ -48,12 +48,12 @@ const shouldFetchMetrics= function(state) {
 };
 
 // ACTIONS
-const fetchMetricsDataIfNeeded= (instanceId) => (
+const fetchMetricsDataIfNeeded= (instanceId,endTime) => (
   function(dispatch, getState) {
-    console.log("memoryfetchMetricsDataIfNeeded");
+    console.log("fetchMetricsDataIfNeeded");
     // check if it is allready fetching
     if (shouldFetchMetrics(getState())) {
-      return dispatch(fetchMetricsData(instanceId));
+      return dispatch(fetchMetricsData(instanceId,undefined,endTime));
     }
   }
 );
