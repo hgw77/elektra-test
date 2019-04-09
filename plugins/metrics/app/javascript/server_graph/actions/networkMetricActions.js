@@ -2,7 +2,6 @@ import * as types from './actionTypes';
 // wrapper for axios -> app/javascript/ajax_helper.js
 import { ajaxHelper,  pluginAjaxHelper} from 'ajax_helper';
 import { addNotice as showNotice, addError as showError } from 'lib/flashes';
-import { ErrorsList } from 'lib/elektra-form/components/errors_list';
 
 // the `ajaxHelper` is set up in init.js to talk to the Maia-Metrics API, so we need a
 // separate AJAX helper for talking to Elektra

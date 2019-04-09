@@ -29,7 +29,7 @@ const Graph = ({name,data,yScale = ["auto","auto"],enableArea = false,resolution
       axisBottom={{
         "orient": "bottom",
         "tickSize": 5,
-        "tickPadding": 15,
+        "tickPadding": 20,
         "tickRotation": timeTickRotation,
         "legend": "",
         "legendOffset": 40,
@@ -41,7 +41,7 @@ const Graph = ({name,data,yScale = ["auto","auto"],enableArea = false,resolution
           "tickPadding": 10,
           "tickRotation": 0,
           "legend": name+" ("+legendUnit+")",
-          "legendOffset": -45,
+          "legendOffset": -60,
           "legendPosition": "center"
       }}
       axisRight={{
