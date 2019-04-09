@@ -45,8 +45,8 @@ const receiveMetricsData = (state,{ metricsData,instanceId,sliderValue,receivedA
 // all reducers are called on each dispatch!
 // switch to handle the correct action that was dispatched
 export const memoryMetrics = function(state = initialState.memory, action) {
-  console.log('memory-metrics-reducers-switch');
-  console.log(action);
+  //console.log('memory-metrics-reducers-switch');
+  //console.log(action);
   switch (action.type) {
     case types.RECEIVE_MEMORY_METRICS_DATA:
       return receiveMetricsData(state,action);

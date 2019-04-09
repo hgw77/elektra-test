@@ -45,7 +45,8 @@ const receiveMetricsData = (state,{ metricsData,instanceId,sliderValue,receivedA
 // all reducers are called on each dispatch!
 // switch to handle the correct action that was dispatched
 export const cpuMetrics = function(state = initialState.cpu, action) {
-  console.log('cpu-metrics-reducers-switch');
+  //console.log('cpu-metrics-reducers-switch');
+  //console.log(action);
   switch (action.type) {
     case types.RECEIVE_CPU_METRICS_DATA:
       return receiveMetricsData(state,action);

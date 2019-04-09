@@ -50,7 +50,7 @@ const shouldFetchMetrics= function(state) {
 // ACTIONS
 const fetchMetricsDataIfNeeded= (instanceId,endTime) => (
   function(dispatch, getState) {
-    console.log("fetchMetricsDataIfNeeded");
+    //console.log("fetchMetricsDataIfNeeded");
     // check if it is allready fetching
     if (shouldFetchMetrics(getState())) {
       return dispatch(fetchMetricsData(instanceId,undefined,endTime));
@@ -61,7 +61,7 @@ const fetchMetricsDataIfNeeded= (instanceId,endTime) => (
 const handleSliderValueChange= (sliderValue,endTime,step) => (
   function(dispatch, getState) {
     // check if it is allready fetching
-    console.log("handleActionStartTimeChange");
+    //console.log("handleActionStartTimeChange");
     // instanceId already in the store
     return dispatch(fetchMetricsData(undefined,sliderValue,endTime,step));
   }
@@ -70,7 +70,7 @@ const handleSliderValueChange= (sliderValue,endTime,step) => (
 // fetch real data from backend and put it into the reducer
 const fetchMetricsData= (instanceId, sliderValue, endTime, step) =>
   function(dispatch, getState) {
-    console.log("fetchMetricsData");
+    //console.log("fetchMetricsData");
 
     // get default time frame from state
     var state = getState();
@@ -80,8 +80,8 @@ const fetchMetricsData= (instanceId, sliderValue, endTime, step) =>
     if (!step) step = state.cpuMetrics.step;
 
     if (sliderValue > endTime) {
-      showError("sliderValue should not bevore endTime!");
-      console.log("sliderValue:"+sliderValue+" endTime:"+endTime);
+      showError("Sorry, this error should not hapen! SliderValue should not bevore endTime...");
+      //console.log("sliderValue:"+sliderValue+" endTime:"+endTime);
     }
     else {
       // 1) start request by setting the date

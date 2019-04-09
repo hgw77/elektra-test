@@ -59,8 +59,8 @@ const receiveMetricsData = (state,{ metricsData,instanceId,sliderValue,receivedA
 // all reducers are called on each dispatch!
 // switch to handle the correct action that was dispatched
 export const networkMetrics = function(state = initialState.network, action) {
-  console.log('network-metrics-reducers-switch');
-  console.log(action);
+  //console.log('network-metrics-reducers-switch');
+  //console.log(action);
   switch (action.type) {
     case types.RECEIVE_NETWORK_METRICS_DATA:
       return receiveMetricsData(state,action);
