@@ -15,8 +15,8 @@ const requestMetricsDataFailure = (state) => {
   });
 };
 
-const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,receivedAt,step }) => {
-  var values = metrics_data.values
+const receiveMetricsData = (state,{ metricsData,instanceId,sliderValue,receivedAt,step }) => {
+  var values = metricsData.values
   // prepare data for nivo line
   // https://nivo.rocks/line
   var data = values.map( value => {
@@ -32,10 +32,9 @@ const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,re
   return Object.assign({},state,{
     data: [{
       data: data,
-      id: "Memory Usage"
+      id: "Memory usage"
     }],
-    startTime: startTime,
-    endTime: endTime,
+    sliderValue: sliderValue,
     step:step,
     instanceId: instanceId,
     isFetching: false,

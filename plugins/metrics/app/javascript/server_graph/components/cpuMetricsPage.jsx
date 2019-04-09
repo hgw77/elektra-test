@@ -21,12 +21,15 @@ export default class MetricsGraph extends React.Component {
   render(){
     return (
       <div>
+        <div>
+          <span className="fa fa-question-circle-o" style={{paddingLeft:"20px", paddingRight:"5px"}}></span>
+          CPU average usage reported by VCenter
+        </div>
         <ToolBar
           resolution={this.state.resolution}
           step={this.props.metrics.step}
-          startTime={this.props.metrics.startTime}
-          endTime={this.props.metrics.endTime}
-          handleStartTimeChange={this.props.handleStartTimeChange}
+          sliderValue={this.props.metrics.sliderValue}
+          handleSliderValueChange={this.props.handleSliderValueChange}
           isFetching={this.props.metrics.isFetching}
         />
         <Graph

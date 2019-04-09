@@ -27,14 +27,13 @@ const requestMetricsDataFailure = () => {
   return { type: types.REQUEST_MEMORY_METRICS_DATA_FAILURE }
 }
 // this is the data structure that is dispatched into the reducer switch
-const receiveMetricsData = (metrics_data, instanceId, startTime, endTime, step) => {
+const receiveMetricsData = (metricsData, instanceId, sliderValue, step) => {
   return {
     type: types.RECEIVE_MEMORY_METRICS_DATA,
-    metrics_data: metrics_data,
+    metricsData: metricsData,
     receivedAt: Date.now(),
     instanceId: instanceId,
-    startTime: startTime,
-    endTime: endTime,
+    sliderValue: sliderValue,
     step: step
   }
 }
@@ -59,30 +58,30 @@ const fetchMetricsDataIfNeeded= (instanceId) => (
   }
 );
 
-const handleStartTimeChange= (startTime,step) => (
+const handleSliderValueChange= (sliderValue,endTime,step) => (
   function(dispatch, getState) {
     // check if it is allready fetching
     console.log("handleActionStartTimeChange");
     // instanceId already in the store
-    return dispatch(fetchMetricsData(undefined,startTime,undefined,step));
+    return dispatch(fetchMetricsData(undefined,sliderValue,endTime,step));
   }
 );
 
 // fetch real data from backend and put it into the reducer
-const fetchMetricsData= (instanceId, startTime, endTime, step) =>
+const fetchMetricsData= (instanceId, sliderValue, endTime, step) =>
   function(dispatch, getState) {
     console.log("fetchMetricsData");
 
     // get default time frame from state
     var state = getState();
     if (!instanceId) instanceId = state.memoryMetrics.instanceId;
-    if (!startTime) startTime = state.memoryMetrics.startTime;
-    if (!endTime) endTime = state.memoryMetrics.endTime;
+    if (!sliderValue) sliderValue = state.memoryMetrics.sliderValue;
+    if (!endTime) endTime = state.memoryMetrics.initalEndTime;
     if (!step) step = state.memoryMetrics.step;
 
-    if (startTime > endTime) {
-      showError("Start time should not bevore end time!");
-      console.log("start time:"+startTime+" end time:"+endTime);
+    if (sliderValue > endTime) {
+      showError("sliderValue should not bevore endTime!");
+      console.log("sliderValue:"+sliderValue+" endTime:"+endTime);
     }
     else {
       // 1) start request by setting the date
@@ -91,11 +90,11 @@ const fetchMetricsData= (instanceId, startTime, endTime, step) =>
       // https://prometheus.io/docs/prometheus/latest/querying/api/
       // https://prometheus.io/docs/prometheus/latest/querying/basics/
       // https://documentation.global.cloud.sap/docs/metrics/metrics.html
-      ajaxHelper.get(`query_range?query=vcenter_mem_usage_average+{instance_uuid='${instanceId}'}&start=${startTime/1000}&end=${endTime/1000}&step=${step}`)
+      ajaxHelper.get(`query_range?query=vcenter_mem_usage_average+{instance_uuid='${instanceId}'}&start=${sliderValue}&end=${endTime}&step=${step}`)
         .then( (response) => {
           // 2) to have the data in the store dispatch the response into the reducer
           // console.log(response);
-          return dispatch(receiveMetricsData(response.data.data.result[0], instanceId, startTime, endTime, step));
+          return dispatch(receiveMetricsData(response.data.data.result[0], instanceId, sliderValue, step));
         })
         .catch( (error) => {
           dispatch(requestMetricsDataFailure());
@@ -107,5 +106,5 @@ const fetchMetricsData= (instanceId, startTime, endTime, step) =>
 // export actions that are public and used in container where actions are dispatched for related component
 export {
   fetchMetricsDataIfNeeded,
-  handleStartTimeChange,
+  handleSliderValueChange,
 }

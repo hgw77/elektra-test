@@ -27,14 +27,13 @@ const requestMetricsDataFailure = () => {
   return { type: types.REQUEST_DISK_METRICS_DATA_FAILURE }
 }
 // this is the data structure that is dispatched into the reducer switch
-const receiveMetricsData = (metrics_data, instanceId, startTime, endTime, step) => {
+const receiveMetricsData = (metricsData, instanceId, sliderValue, step) => {
   return {
     type: types.RECEIVE_DISK_METRICS_DATA,
-    metrics_data: metrics_data,
+    metricsData: metricsData,
     receivedAt: Date.now(),
     instanceId: instanceId,
-    startTime: startTime,
-    endTime: endTime,
+    sliderValue: sliderValue,
     step: step
   }
 }
@@ -59,30 +58,30 @@ const fetchMetricsDataIfNeeded= (instanceId) => (
   }
 );
 
-const handleStartTimeChange= (startTime,step) => (
+const handleSliderValueChange= (sliderValue,endTime,step) => (
   function(dispatch, getState) {
     // check if it is allready fetching
     console.log("handleActionStartTimeChange");
     // instanceId already in the store
-    return dispatch(fetchMetricsData(undefined,startTime,undefined,step));
+    return dispatch(fetchMetricsData(undefined,sliderValue,endTime,step));
   }
 );
 
 // fetch real data from backend and put it into the reducer
-const fetchMetricsData= (instanceId, startTime, endTime, step) =>
+const fetchMetricsData= (instanceId, sliderValue, endTime, step) =>
   function(dispatch, getState) {
     console.log("fetchMetricsData");
 
     // get default time frame from state
     var state = getState();
     if (!instanceId) instanceId = state.diskMetrics.instanceId;
-    if (!startTime) startTime = state.diskMetrics.startTime;
-    if (!endTime) endTime = state.diskMetrics.endTime;
+    if (!sliderValue) sliderValue = state.diskMetrics.sliderValue;
+    if (!endTime) endTime = state.diskMetrics.initalEndTime;
     if (!step) step = state.diskMetrics.step;
 
-    if (startTime > endTime) {
-      showError("Start time should not bevore end time!");
-      console.log("start time:"+startTime+" end time:"+endTime);
+    if (sliderValue > endTime) {
+      showError("sliderValue should not bevore endTime!");
+      console.log("sliderValue:"+sliderValue+" endTime:"+endTime);
     }
     else {
       // 1) start request by setting the date
@@ -93,10 +92,10 @@ const fetchMetricsData= (instanceId, startTime, endTime, step) =>
       // https://documentation.global.cloud.sap/docs/metrics/metrics.html
       const promises = [];
       promises.push (
-        ajaxHelper.get(`query_range?query=vcenter_virtualDisk_read_average+{instance_uuid='${instanceId}'}&start=${startTime/1000}&end=${endTime/1000}&step=${step}`)
+        ajaxHelper.get(`query_range?query=vcenter_virtualDisk_read_average+{instance_uuid='${instanceId}'}&start=${sliderValue}&end=${endTime}&step=${step}`)
       );
       promises.push (
-        ajaxHelper.get(`query_range?query=vcenter_virtualDisk_write_average+{instance_uuid='${instanceId}'}&start=${startTime/1000}&end=${endTime/1000}&step=${step}`)
+        ajaxHelper.get(`query_range?query=vcenter_virtualDisk_write_average+{instance_uuid='${instanceId}'}&start=${sliderValue}&end=${endTime}&step=${step}`)
       );
 
       Promise.all(promises).then( (responses) => {
@@ -106,7 +105,7 @@ const fetchMetricsData= (instanceId, startTime, endTime, step) =>
           read: responses[0].data.data.result[0],
           write: responses[1].data.data.result[0]
         }
-        return dispatch(receiveMetricsData(diskIoData, instanceId, startTime, endTime, step));
+        return dispatch(receiveMetricsData(diskIoData, instanceId, sliderValue, step));
       })
       .catch( (error) => {
         dispatch(requestMetricsDataFailure());
@@ -118,5 +117,5 @@ const fetchMetricsData= (instanceId, startTime, endTime, step) =>
 // export actions that are public and used in container where actions are dispatched for related component
 export {
   fetchMetricsDataIfNeeded,
-  handleStartTimeChange,
+  handleSliderValueChange,
 }

@@ -24,9 +24,8 @@ export default class MetricsGraph extends React.Component {
         <ToolBar
           resolution={this.state.resolution}
           step={this.props.metrics.step}
-          startTime={this.props.metrics.startTime}
-          endTime={this.props.metrics.endTime}
-          handleStartTimeChange={this.props.handleStartTimeChange}
+          sliderValue={this.props.metrics.sliderValue}
+          handleSliderValueChange={this.props.handleSliderValueChange}
           isFetching={this.props.metrics.isFetching}
         />
         <Graph

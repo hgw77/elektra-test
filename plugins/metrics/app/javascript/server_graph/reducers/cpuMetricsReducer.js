@@ -15,8 +15,8 @@ const requestMetricsDataFailure = (state) => {
   });
 };
 
-const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,receivedAt,step }) => {
-  var values = metrics_data.values
+const receiveMetricsData = (state,{ metricsData,instanceId,sliderValue,receivedAt,step }) => {
+  var values = metricsData.values
   // prepare data for nivo line
   // https://nivo.rocks/line
   var data = values.map( value => {
@@ -34,8 +34,7 @@ const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,re
       data: data,
       id: "CPU Usage"
     }],
-    startTime: startTime,
-    endTime: endTime,
+    sliderValue: sliderValue,
     step:step,
     instanceId: instanceId,
     isFetching: false,
@@ -47,7 +46,6 @@ const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,re
 // switch to handle the correct action that was dispatched
 export const cpuMetrics = function(state = initialState.cpu, action) {
   console.log('cpu-metrics-reducers-switch');
-  console.log(action);
   switch (action.type) {
     case types.RECEIVE_CPU_METRICS_DATA:
       return receiveMetricsData(state,action);

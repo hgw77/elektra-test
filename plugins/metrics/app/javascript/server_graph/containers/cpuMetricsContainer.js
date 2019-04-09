@@ -23,7 +23,7 @@ function mapDispatchToProps(dispatch) {
       // will bind the loadMetricsDataOnce function to props so we can call it with "this.props.loadMetricsDataOnce"
       // other way without bindActionCreators -> loadMetricsDataOnce: (instanceId) => dispatch(fetchMetricsDataIfNeeded(instanceId))
       loadMetricsDataOnce:   bindActionCreators(metricActions.fetchMetricsDataIfNeeded,dispatch),
-      handleStartTimeChange: bindActionCreators(metricActions.handleStartTimeChange,dispatch)
+      handleSliderValueChange: bindActionCreators(metricActions.handleSliderValueChange,dispatch)
   }
 }
 
@@ -48,7 +48,7 @@ export default connect(
   dispatch => ({
     loadMetricsDataOnce: (instanceId) => dispatch(fetchMetricsDataIfNeeded(instanceId)),
     handleStepChange:(step) => dispatch(handlestepChange(step)),
-    handleStartTimeChange: (startTime) => dispatch(handleStartTimeChange(startTime))
+    handleSliderValueChange: (startTime) => dispatch(handleSliderValueChange(startTime))
   })
 )(GraphData);
 */

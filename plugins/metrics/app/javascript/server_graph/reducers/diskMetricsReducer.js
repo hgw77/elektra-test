@@ -29,9 +29,9 @@ const prepareData = (rawData) => {
   return data
 }
 
-const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,receivedAt,step }) => {
-  var valuesRead = metrics_data.read
-  var valuesWrite = metrics_data.write;
+const receiveMetricsData = (state,{ metricsData,instanceId,sliderValue,receivedAt,step }) => {
+  var valuesRead = metricsData.read
+  var valuesWrite = metricsData.write;
   // prepare data for nivo line
   // https://nivo.rocks/line
   var dataRead = prepareData(valuesRead.values);
@@ -48,8 +48,7 @@ const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,re
         id: "Write",
       }
     ],
-    startTime: startTime,
-    endTime: endTime,
+    sliderValue: sliderValue,
     step:step,
     instanceId: instanceId,
     isFetching: false,

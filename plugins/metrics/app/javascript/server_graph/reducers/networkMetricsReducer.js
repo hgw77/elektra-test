@@ -29,9 +29,9 @@ const prepareData = (rawData) => {
   return data
 }
 
-const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,receivedAt,step }) => {
-  var valuesTx = metrics_data.tx
-  var valuesRx = metrics_data.rx;
+const receiveMetricsData = (state,{ metricsData,instanceId,sliderValue,receivedAt,step }) => {
+  var valuesTx = metricsData.tx
+  var valuesRx = metricsData.rx;
   // prepare data for nivo line
   // https://nivo.rocks/line
   var dataTx = prepareData(valuesTx.values);
@@ -48,8 +48,7 @@ const receiveMetricsData = (state,{ metrics_data,instanceId,startTime,endTime,re
         id: "Received",
       }
     ],
-    startTime: startTime,
-    endTime: endTime,
+    sliderValue: sliderValue,
     step:step,
     instanceId: instanceId,
     isFetching: false,
