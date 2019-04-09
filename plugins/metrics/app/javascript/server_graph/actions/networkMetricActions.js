@@ -70,8 +70,7 @@ const handleSliderValueChange= (sliderValue,endTime,step) => (
 // fetch real data from backend and put it into the reducer
 const fetchMetricsData= (instanceId, sliderValue, endTime, step) =>
   function(dispatch, getState) {
-    console.log("fetchMetricsDataXXXXX");
-    console.log(step);
+    console.log("fetchMetricsData");
 
     // get default time frame from state
     var state = getState();
