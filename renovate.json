@@ -5,5 +5,6 @@
   "unicodeEmoji": true,
   "separateMinorPatch": false,
   "separateMajorMinor": true,
-  "prHourlyLimit": 0
+  "prHourlyLimit": 0,
+  "ruby-version":{"enabled": false}
 }
