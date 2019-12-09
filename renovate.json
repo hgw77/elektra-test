@@ -6,5 +6,9 @@
   "separateMinorPatch": false,
   "separateMajorMinor": true,
   "prHourlyLimit": 0,
-  "ruby-version":{"enabled": false}
+  "ruby-version":{"enabled": false},
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security"]
+  }
 }
