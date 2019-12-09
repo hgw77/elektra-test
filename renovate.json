@@ -1,5 +1,9 @@
 {
   "extends": [
     "config:base"
-  ]
+  ],
+  "unicodeEmoji": true,
+  "separateMinorPatch": false,
+  "separateMajorMinor": true,
+  "prHourlyLimit": 0
 }
