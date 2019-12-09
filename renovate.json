@@ -11,5 +11,8 @@
   "vulnerabilityAlerts": {
     "enabled": true,
     "labels": ["security"]
+  },
+  "major": {
+    "enabled": false
   }
 }
