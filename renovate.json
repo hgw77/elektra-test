@@ -18,5 +18,21 @@
   },
   "major": {
     "enabled": false
-  }
+  },
+  "packageRules": [
+    {
+      "depTypeList": [
+        "peerDependencies"
+      ],
+      "enabled": true,
+      "rangeStrategy": "auto"
+    },
+    {
+      "depTypeList": [
+        "devDependencies"
+      ],
+      "enabled": true,
+      "rangeStrategy": "pin"
+    }
+  ]
 }
